@@ -1,6 +1,9 @@
 
 package robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -20,6 +23,8 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
+	public static List<R_Subsystem> subsystemList = new ArrayList<R_Subsystem>();
+	
     Command autonomousCommand;
 
     public void autonomousInit() {
@@ -69,6 +74,9 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        for (R_Subsystem r: subsystemList) {
+        	r.periodic();
+        }
     }
     
     /**
