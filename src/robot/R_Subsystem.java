@@ -13,4 +13,6 @@ public class R_Subsystem extends Subsystem {
 	public void periodic() {
 		
 	}
+	
+	public void init() {}
 }
