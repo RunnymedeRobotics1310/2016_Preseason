@@ -59,6 +59,12 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         // instantiate the command used for the autonomous period
         autonomousCommand = new ExampleCommand();
+        // Add all the subsystems to the subsystem list.
+        subsystemList.add(exampleSubsystem);
+        
+        for (R_Subsystem s: subsystemList) {
+        	s.init();
+        }
     }
 
     public void teleopInit() {
