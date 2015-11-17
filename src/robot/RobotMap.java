@@ -15,5 +15,30 @@ public class RobotMap {
     // number and the module. For example you with a rangefinder:
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
-	
+
+    private final static boolean flipped = true;
+
+    public enum MotorMap {
+        LEFTMOTOR(0, flipped),
+        RIGHTMOTOR(1, !flipped);
+
+        public final int port;
+        public final boolean inverted;
+
+        MotorMap(int port, boolean invertedState) {
+            this.port = port;
+            this.inverted = invertedState;
+        }
+    }
+
+    public enum sensorMap {
+        LEFTENCODER(0),
+        RIGHTENCDOER(1);
+
+        public final int port;
+
+        sensorMap(int port) {
+            this.port = port;
+        }
+    }
 }
