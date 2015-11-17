@@ -22,9 +22,9 @@ public class RobotMap {
     }
 
     public enum sensorMap {
-        LEFT_ENCODER(0),
-        RIGHT_ENCDOER(1);
-
+        //LEFT_ENCODER(0)
+        RIGHT_ENCDOER(1),
+    	LIMIT_SWITCH(0);
         public final int port;
 
         sensorMap(int port) {
