@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import robot.commands.ExampleCommand;
+import robot.subsystems.ChassisSubsystem;
 import robot.subsystems.ExampleSubsystem;
 
 /**
@@ -21,6 +22,7 @@ import robot.subsystems.ExampleSubsystem;
 public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
+	public static final ChassisSubsystem chassisSubsystem = new ChassisSubsystem();
 	public static OI oi;
 
 	public static List<R_Subsystem> subsystemList = new ArrayList<R_Subsystem>();
@@ -61,6 +63,7 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new ExampleCommand();
         // Add all the subsystems to the subsystem list.
         subsystemList.add(exampleSubsystem);
+        subsystemList.add(chassisSubsystem);
         
         for (R_Subsystem s: subsystemList) {
         	s.init();
