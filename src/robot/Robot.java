@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import robot.commands.ExampleCommand;
 import robot.subsystems.ChassisSubsystem;
 import robot.subsystems.ExampleSubsystem;
+import robot.subsystems.I2cSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,6 +24,7 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static final ChassisSubsystem chassisSubsystem = new ChassisSubsystem();
+	public static final I2cSubsystem i2cSubsystem = new I2cSubsystem();
 	public static OI oi;
 
 	public static List<R_Subsystem> subsystemList = new ArrayList<R_Subsystem>();
@@ -64,6 +66,7 @@ public class Robot extends IterativeRobot {
         // Add all the subsystems to the subsystem list.
         subsystemList.add(exampleSubsystem);
         subsystemList.add(chassisSubsystem);
+        subsystemList.add(i2cSubsystem);
         
         for (R_Subsystem s: subsystemList) {
         	s.init();
@@ -85,6 +88,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         for (R_Subsystem r: subsystemList) {
         	r.periodic();
+        	r.updateDashboard();
         }
     }
     

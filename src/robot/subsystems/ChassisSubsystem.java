@@ -3,6 +3,7 @@ package robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_Subsystem;
 import robot.RobotMap;
 import robot.commands.JoystickCommand;
@@ -39,4 +40,8 @@ public class ChassisSubsystem extends R_Subsystem {
 		rightMotor.set(rightSpeed);
 	}
 
+	@Override
+	public void updateDashboard() {
+		SmartDashboard.putBoolean("limit switch", limitSwitch.get());
+	}
 }
