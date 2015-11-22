@@ -39,6 +39,15 @@ public class F310_Joystick {
 			this.xModeNumber = xModeNumber;
 			this.dModeNumber = dModeNumber;
 		}
+		
+		public int getPortNumber(JoystickMode mode) {
+			if (mode == JoystickMode.X) {
+				return xModeNumber;
+			}
+			else {
+				return dModeNumber;
+			}
+		}
 	}
 
 	public enum axisMap {
@@ -70,14 +79,8 @@ public class F310_Joystick {
 	// current joystick mode
 	public buttonMap getButton(int feedNumber, JoystickMode mode) {
 		for (buttonMap button : buttonMap.values())
-			if (mode == JoystickMode.X) {
-				if (button.xModeNumber == feedNumber) {
-					return button;
-				}
-			} else {
-				if (button.dModeNumber == feedNumber) {
-					return button;
-				}
+			if (button.getPortNumber(getMode()) == feedNumber) {
+				return button;
 			}
 		return null;
 	}
@@ -99,13 +102,8 @@ public class F310_Joystick {
 	}
 
 	// checks if the specified button has been pressed, returns true or false
-	public boolean getRawButton(buttonMap button, JoystickMode mode) {
-		if (mode == JoystickMode.D) {
-			return DRIVE_STICK.getRawButton(button.dModeNumber);
-		} else {
-			return DRIVE_STICK.getRawButton(button.xModeNumber);
-		}
-
+	public boolean getRawButton(buttonMap button) {
+			return DRIVE_STICK.getRawButton(button.getPortNumber(getMode()));
 	}
 
 	// checks if the specified button has been pressed, returns true or false
