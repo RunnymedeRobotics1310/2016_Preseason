@@ -1,6 +1,7 @@
 package robot;
 
-import edu.wpi.first.wpilibj.Joystick;
+import robot.F310_Joystick.Axis;
+import robot.F310_Joystick.Stick;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -8,10 +9,11 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class OI {
 	
-    Joystick driverStick = new Joystick(0);
+    F310_Joystick driverStick = new F310_Joystick(0);
     
     public double getSpeed() {
-    	return driverStick.getRawAxis(1);
+    	double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);
+    	return joystickValue*Math.abs(joystickValue);
     }
 }
 
