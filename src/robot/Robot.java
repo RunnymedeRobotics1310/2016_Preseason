@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         for (R_Subsystem r: subsystemList) {
         	r.periodic();
+        	r.updateDashboard();
         }
     }
     

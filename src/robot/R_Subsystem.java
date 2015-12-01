@@ -15,4 +15,6 @@ public class R_Subsystem extends Subsystem {
 	}
 	
 	public void init() {}
+	
+	public void updateDashboard() {}
 }
