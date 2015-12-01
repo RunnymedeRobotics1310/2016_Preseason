@@ -3,6 +3,8 @@ package robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_Subsystem;
@@ -20,6 +22,22 @@ public class ChassisSubsystem extends R_Subsystem {
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
 
+	PIDController leftMotorPID = new PIDController(0.4, 0.0, 0.0, 1.0, 
+			new PIDSource() {
+				@Override
+				public double pidGet() {
+					return leftEncoder.getRate()/300.0;
+				}},  
+			leftMotor);
+	
+	PIDController rightMotorPID = new PIDController(0.4, 0.0, 0.0, 1.0, 
+			new PIDSource() {
+				@Override
+				public double pidGet() {
+					return rightEncoder.getRate()/300.0;
+				}}, 
+			rightMotor);
+	
 	public void initDefaultCommand() {
 
 		setDefaultCommand(new JoystickCommand());
@@ -39,15 +57,24 @@ public class ChassisSubsystem extends R_Subsystem {
 			rightSpeed *= -1;
 		}
 
-		leftMotor.set(leftSpeed);
-		rightMotor.set(rightSpeed);
+		leftMotorPID.setSetpoint(leftSpeed);
+		rightMotorPID.setSetpoint(rightSpeed);
+		if (!leftMotorPID.isEnable()) {
+			leftMotorPID.enable();
+		}
+		if (!rightMotorPID.isEnable()) {
+			rightMotorPID.enable();
+		}
 	}
 
+	@Override
 	public void updateDashboard() {
 		SmartDashboard.putData("Left Motor", leftMotor);
 		SmartDashboard.putData("Right Motor", rightMotor);
 		SmartDashboard.putData("Limit Switch", limitSwitch);
 		SmartDashboard.putData("Left Encoder", leftEncoder);
 		SmartDashboard.putData("Right Encoder", rightEncoder);
+		SmartDashboard.putData("Left Motor PID", leftMotorPID);
+		SmartDashboard.putData("Right Motor PID", rightMotorPID);
 	}
 }

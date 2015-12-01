@@ -2,7 +2,7 @@ package robot;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class R_Subsystem extends Subsystem {
+public abstract class R_Subsystem extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
@@ -16,5 +16,8 @@ public class R_Subsystem extends Subsystem {
 	
 	public void init() {}
 	
-	public void updateDashboard() {}
+	/**
+	 * Update the dashboard every cycle.
+	 */
+	public abstract void updateDashboard();
 }
