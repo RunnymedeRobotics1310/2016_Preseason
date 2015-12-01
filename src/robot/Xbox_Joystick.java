@@ -9,17 +9,17 @@ public class Xbox_Joystick{
 		DRIVE_STICK = new Joystick(port);
 	}
 
-	private enum Axis {
+	public enum Axis {
 		X, 
 		Y;
 	}
 	
-	private enum Stick {
+	public enum Stick {
 		LEFT,
 		RIGHT;
 	}
 
-	private enum buttonMap {
+	private enum Button {
 		LEFT_STICK(9), 
 		RIGHT_STICK(10), 
 		LEFT_BUMPER(5), 
@@ -33,7 +33,7 @@ public class Xbox_Joystick{
 
 		final int buttonNumber;
 
-		buttonMap(int button) {
+		Button(int button) {
 			this.buttonNumber = button;
 		}
 	}
@@ -69,7 +69,7 @@ public class Xbox_Joystick{
     * 
     * @return boolean The value of the button.
     */
-	public boolean getButton(buttonMap button) {
+	public boolean getButton(Button button) {
 		return DRIVE_STICK.getRawButton(button.buttonNumber);
 	}
 	
