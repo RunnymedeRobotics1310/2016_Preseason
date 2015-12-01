@@ -22,13 +22,25 @@ public class RobotMap {
     }
 
     public enum sensorMap {
-        //LEFT_ENCODER(0)
-        RIGHT_ENCDOER(1),
     	LIMIT_SWITCH(0);
+    	
         public final int port;
 
         sensorMap(int port) {
             this.port = port;
         }
+    }
+    
+    public enum EncoderMap {
+    	LEFT(1, 2),
+    	RIGHT(8, 9);
+    	
+    	public final int ch1;
+    	public final int ch2;
+    	
+    	EncoderMap(int ch1, int ch2) {
+    		this.ch1 = ch1;
+    		this.ch2 = ch2;
+    	}
     }
 }

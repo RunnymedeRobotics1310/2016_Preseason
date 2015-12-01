@@ -2,6 +2,7 @@
 package robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_Subsystem;
@@ -16,6 +17,8 @@ public class ChassisSubsystem extends R_Subsystem {
 	Talon leftMotor = new Talon(RobotMap.MotorMap.LEFT_MOTOR.port);
 	Talon rightMotor = new Talon(RobotMap.MotorMap.RIGHT_MOTOR.port);
 	DigitalInput limitSwitch = new DigitalInput(RobotMap.sensorMap.LIMIT_SWITCH.port);
+	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
+	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
 
 	public void initDefaultCommand() {
 
@@ -44,5 +47,7 @@ public class ChassisSubsystem extends R_Subsystem {
 		SmartDashboard.putData("Left Motor", leftMotor);
 		SmartDashboard.putData("Right Motor", rightMotor);
 		SmartDashboard.putData("Limit Switch", limitSwitch);
+		SmartDashboard.putData("Left Encoder", leftEncoder);
+		SmartDashboard.putData("Right Encoder", rightEncoder);
 	}
 }
