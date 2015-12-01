@@ -14,7 +14,7 @@ public class Xbox_Joystick{
 		Y;
 	}
 	
-	private enum Side {
+	private enum Stick {
 		LEFT,
 		RIGHT;
 	}
@@ -87,13 +87,13 @@ public class Xbox_Joystick{
 	/**
      * Get the value of the axis.
      *
-     * @param side The side of the joystick to read. [Side.LEFT, Side.RIGHT]
-     * @param axis The axis to be returned [Axis.X, Axis.Y]
+     * @param stick The side of the joystick to read. [Stick.LEFT, Stick.RIGHT]
+     * @param axis The axis of the stick to be returned. [Axis.X, Axis.Y]
      * 
      * @return double The value of the axis.
      */
-	public double getAxis(Side side, Axis axis) {
-			switch (side) {
+	public double getAxis(Stick stick, Axis axis) {
+			switch (stick) {
 				case LEFT:
 					switch (axis) {
 						case X:
