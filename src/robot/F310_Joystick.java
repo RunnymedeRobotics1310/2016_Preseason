@@ -25,10 +25,6 @@ public class F310_Joystick {
 		RIGHT_STICK(9, 10), 
 		LEFT_BUMPER(4, 4), 
 		RIGHT_BUMPER(5, 5), 
-		//RETURNS AXIS: (2,)
-		LEFT_TRIGGER(7, 6),
-		//RETURNS AXIS: (3,)
-		RIGHT_TRIGGER(8, 7),
 		START(7, 9),
 		BACK(6, 8),
 
@@ -76,16 +72,38 @@ public class F310_Joystick {
 			}
 		}
 	}
+	
+	public enum triggerMap {
+		LEFT_TRIGGER(7, 6),
+		RIGHT_TRIGGER(8, 7);
+		
+		int xModeNumber;
+		int dModeNumber;
+		
+		triggerMap(int xModeNumber, int dModeNumber) {
+			this.xModeNumber = xModeNumber;
+			this.dModeNumber = dModeNumber;
+		}
+		
+		public int getPortNumber(JoystickMode mode) {
+			if (mode == JoystickMode.X) {
+				return xModeNumber;
+			}
+			else {
+				return dModeNumber;
+			}
+		}
+	}
 
 	// gets the buttonMap representation of the specified number based on the
 	// current joystick mode
-	public buttonMap getButton(int feedNumber, JoystickMode mode) {
+	/*public buttonMap getButton(int feedNumber, JoystickMode mode) {
 		for (buttonMap button : buttonMap.values())
 			if (button.getPortNumber(getMode()) == feedNumber) {
 				return button;
 			}
 		return null;
-	}
+	}*/
 
 	private Joystick joystick;
 
@@ -129,6 +147,18 @@ public class F310_Joystick {
 			case Y:
 				return joystick.getRawAxis(axisMap.RIGHT_AXIS_Y.getPortNumber(getMode()));
 			}
+		}
+		return 0.0;
+
+	}
+	
+	public double getTrigger(Stick side) {
+		switch (side) {
+		case LEFT:
+				return joystick.getRawAxis(triggerMap.LEFT_TRIGGER.getPortNumber(getMode()));
+		case RIGHT:
+				return joystick.getRawAxis(triggerMap.RIGHT_TRIGGER.getPortNumber(getMode()));
+
 		}
 		return 0.0;
 
