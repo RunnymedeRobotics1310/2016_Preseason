@@ -50,8 +50,8 @@ public class Xbox_Joystick{
 	}
 	
 	private enum axisMap {
-		LEFT_X(1), 
-		LEFT_Y(2), 
+		LEFT_X(0), 
+		LEFT_Y(1), 
 		RIGHT_X(4), 
 		RIGHT_Y(5);
 
