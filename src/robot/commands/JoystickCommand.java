@@ -22,7 +22,7 @@ public class JoystickCommand extends Command {
     	double speed = Robot.oi.getSpeed();
     	double turn  = Robot.oi.getTurn();
     	
-    	double leftSpeed  = (turn < 0) ? speed * (1 - turn) : speed;
+    	double leftSpeed  = (turn < 0) ? speed * (1 + turn) : speed;
     	double rightSpeed = (turn > 0) ? speed * (1 - turn) : speed;
     	
     	Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);

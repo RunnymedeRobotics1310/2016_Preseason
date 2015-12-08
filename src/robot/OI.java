@@ -14,12 +14,12 @@ public class OI {
     
     public double getSpeed() {
     	double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);
-    	return Math.round(joystickValue * Math.abs(joystickValue) * 1000) / 1000;
+    	return Math.round(joystickValue * Math.abs(joystickValue) * 1000) / 1000.0;
     }
     
     public double getTurn() {
     	double joystickValue = driverStick.getAxis(Stick.RIGHT, Axis.X);
-    	return Math.round(joystickValue * Math.abs(joystickValue) * 1000) / 1000;
+    	return Math.round(joystickValue * Math.abs(joystickValue) * 1000) / 1000.0;
     }
 }
 
