@@ -22,7 +22,7 @@ public class RobotMap {
     }
 
     public enum sensorMap {
-    	LIMIT_SWITCH(0);
+    	LIMIT_SWITCH(9);
     	
         public final int port;
 
@@ -32,8 +32,8 @@ public class RobotMap {
     }
     
     public enum EncoderMap {
-    	LEFT(1, 2),
-    	RIGHT(8, 9);
+    	LEFT(0, 1),
+    	RIGHT(2, 3);
     	
     	public final int ch1;
     	public final int ch2;

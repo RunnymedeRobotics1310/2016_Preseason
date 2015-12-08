@@ -22,7 +22,7 @@ public class ChassisSubsystem extends R_Subsystem {
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
 
-	PIDController leftMotorPID = new PIDController(0.4, 0.0, 0.0, 1.0, 
+	PIDController leftMotorPID = new PIDController(0, 0.0, 0.0, 1.0, 
 			new PIDSource() {
 				@Override
 				public double pidGet() {
@@ -30,7 +30,7 @@ public class ChassisSubsystem extends R_Subsystem {
 				}},  
 			leftMotor);
 	
-	PIDController rightMotorPID = new PIDController(0.4, 0.0, 0.0, 1.0, 
+	PIDController rightMotorPID = new PIDController(0, 0.0, 0.0, 1.0, 
 			new PIDSource() {
 				@Override
 				public double pidGet() {
