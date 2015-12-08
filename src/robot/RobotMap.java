@@ -9,8 +9,8 @@ public class RobotMap {
     private final static boolean inverted = true;
 
     public enum MotorMap {
-        LEFT_MOTOR (0,  RobotMap.inverted),
-        RIGHT_MOTOR(1, !RobotMap.inverted);
+        LEFT_MOTOR (1,  RobotMap.inverted),
+        RIGHT_MOTOR(0, !RobotMap.inverted);
 
         public final int port;
         public final boolean inverted;
@@ -22,7 +22,7 @@ public class RobotMap {
     }
 
     public enum sensorMap {
-    	LIMIT_SWITCH(9);
+    	LIMIT_SWITCH(0);
     	
         public final int port;
 
@@ -32,8 +32,8 @@ public class RobotMap {
     }
     
     public enum EncoderMap {
-    	LEFT(0, 1),
-    	RIGHT(2, 3);
+    	LEFT(2, 3),
+    	RIGHT(0, 1);
     	
     	public final int ch1;
     	public final int ch2;
