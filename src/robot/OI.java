@@ -16,5 +16,10 @@ public class OI {
     	double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);
     	return joystickValue*Math.abs(joystickValue);
     }
+    
+    public double getTurn() {
+    	double joystickValue = driverStick.getAxis(Stick.RIGHT, Axis.X);
+    	return joystickValue*Math.abs(joystickValue);
+    }
 }
 
