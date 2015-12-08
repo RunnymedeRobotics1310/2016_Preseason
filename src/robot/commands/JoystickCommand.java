@@ -20,11 +20,17 @@ public class JoystickCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double speed = Robot.oi.getSpeed();
-    	double turn  = Robot.oi.getTurn();
+    	double turn = Robot.oi.getTurn();
+    	double leftSpeed;
+    	double rightSpeed;
     	
-    	double leftSpeed  = (turn < 0) ? speed * (1 + turn) : speed;
-    	double rightSpeed = (turn > 0) ? speed * (1 - turn) : speed;
-    	
+    	if (speed == 0) {
+    		leftSpeed = -turn;
+    		rightSpeed = turn;
+    	} else {
+    		leftSpeed = (turn < 0) ? speed * (1 + turn) : speed;
+    		rightSpeed = (turn > 0) ? speed * (1 - turn) : speed;
+    	}
     	Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
 	}
 
