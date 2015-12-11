@@ -20,9 +20,17 @@ public class RobotMap {
             this.inverted = invertedState;
         }
     }
-
+    
+    public enum ServoMap {
+        SERVO_ONE (9);
+        public final int port;
+        ServoMap(int port) {
+        	this.port = port;
+        }
+    }
+    
     public enum sensorMap {
-    	LIMIT_SWITCH (9);
+    	LIMIT_SWITCH (8);
     	
         public final int port;
 

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import robot.subsystems.ChassisSubsystem;
+import robot.subsystems.ServoSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -20,6 +21,7 @@ import robot.subsystems.ChassisSubsystem;
 public class Robot extends IterativeRobot {
 
 	public static final ChassisSubsystem chassisSubsystem = new ChassisSubsystem();
+	public static final ServoSubsystem servoSubsystem = new ServoSubsystem(); 
 	public static OI oi;
 
 	public static List<R_Subsystem> subsystemList = new ArrayList<R_Subsystem>();
@@ -60,6 +62,7 @@ public class Robot extends IterativeRobot {
         autonomousCommand = null; //FIXME: add the auto command
         // Add all the subsystems to the subsystem list.
         subsystemList.add(chassisSubsystem);
+        subsystemList.add(servoSubsystem);
         
         for (R_Subsystem s: subsystemList) {
         	s.init();
