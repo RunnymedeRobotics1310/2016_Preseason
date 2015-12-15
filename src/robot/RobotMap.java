@@ -29,12 +29,16 @@ public class RobotMap {
         }
     }
     
-    public enum sensorMap {
-    	LIMIT_SWITCH (8);
+    public enum SensorMap {
+    	// Analog Ports
+    	GYRO         (0), 
+    	
+    	// Digital Ports
+    	LIMIT_SWITCH (8); 
     	
         public final int port;
 
-        sensorMap(int port) {
+        SensorMap(int port) {
             this.port = port;
         }
     }
@@ -51,4 +55,5 @@ public class RobotMap {
     		this.ch2 = ch2;
     	}
     }
+    
 }

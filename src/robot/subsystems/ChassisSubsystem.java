@@ -3,6 +3,7 @@ package robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Talon;
@@ -18,25 +19,28 @@ public class ChassisSubsystem extends R_Subsystem {
 
 	Talon leftMotor = new Talon(RobotMap.MotorMap.LEFT_MOTOR.port);
 	Talon rightMotor = new Talon(RobotMap.MotorMap.RIGHT_MOTOR.port);
-	DigitalInput limitSwitch = new DigitalInput(RobotMap.sensorMap.LIMIT_SWITCH.port);
+	DigitalInput limitSwitch = new DigitalInput(RobotMap.SensorMap.LIMIT_SWITCH.port);
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
 
-	PIDController leftMotorPID = new PIDController(0, 0.0, 0.0, 1.0, 
+	PIDController leftMotorPID = new PIDController(0.5, 0.0, 0.0, 1.0, 
 			new PIDSource() {
 				@Override
 				public double pidGet() {
-					return leftEncoder.getRate()/300.0;
+					return leftEncoder.getRate()/1800.0;
 				}},  
 			leftMotor);
 	
-	PIDController rightMotorPID = new PIDController(0, 0.0, 0.0, 1.0, 
+	PIDController rightMotorPID = new PIDController(0.5, 0.0, 0.0, 1.0, 
 			new PIDSource() {
 				@Override
 				public double pidGet() {
-					return rightEncoder.getRate()/300.0;
+					return rightEncoder.getRate()/1800.0;
 				}}, 
 			rightMotor);
+
+	// Gyro
+	Gyro gyro = new Gyro(RobotMap.SensorMap.GYRO.port);
 	
 	public void initDefaultCommand() {
 
@@ -76,5 +80,6 @@ public class ChassisSubsystem extends R_Subsystem {
 		SmartDashboard.putData("Right Encoder", rightEncoder);
 		SmartDashboard.putData("Left Motor PID", leftMotorPID);
 		SmartDashboard.putData("Right Motor PID", rightMotorPID);
+		SmartDashboard.putData("Gyro", gyro);
 	}
 }
