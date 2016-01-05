@@ -32,8 +32,8 @@ public class JoystickCommand extends Command {
     	}
     	
     	if (speed == 0) {
-    		leftSpeed = -turn;
-    		rightSpeed = turn;
+    		leftSpeed = turn;
+    		rightSpeed = -turn;
     	} else {
     		leftSpeed = (turn < 0) ? speed * (1 + turn) : speed;
     		rightSpeed = (turn > 0) ? speed * (1 - turn) : speed;

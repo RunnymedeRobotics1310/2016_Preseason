@@ -9,8 +9,8 @@ public class RobotMap {
     private final static boolean inverted = true;
 
     public enum MotorMap {
-        LEFT_MOTOR (1,  RobotMap.inverted),
-        RIGHT_MOTOR(0, !RobotMap.inverted);
+        LEFT_MOTOR (1, !RobotMap.inverted),
+        RIGHT_MOTOR(0, RobotMap.inverted);
 
         public final int port;
         public final boolean inverted;
