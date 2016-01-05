@@ -19,6 +19,7 @@ public class JoystickCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	double speed = Robot.oi.getSpeed();
     	double turn = Robot.oi.getTurn();
     	double leftSpeed;

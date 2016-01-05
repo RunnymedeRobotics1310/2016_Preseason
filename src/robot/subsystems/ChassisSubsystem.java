@@ -17,6 +17,15 @@ import robot.commands.JoystickCommand;
  */
 public class ChassisSubsystem extends R_Subsystem {
 
+	class MyGyro extends Gyro {
+		MyGyro(int port) {
+			super(port);
+		}
+		public double getAngle() {
+			return - super.getAngle();
+		}
+	}
+	
 	Talon leftMotor = new Talon(RobotMap.MotorMap.LEFT_MOTOR.port);
 	Talon rightMotor = new Talon(RobotMap.MotorMap.RIGHT_MOTOR.port);
 	DigitalInput limitSwitch = new DigitalInput(RobotMap.SensorMap.LIMIT_SWITCH.port);
@@ -40,7 +49,12 @@ public class ChassisSubsystem extends R_Subsystem {
 			rightMotor);
 
 	// Gyro
-	Gyro gyro = new Gyro(RobotMap.SensorMap.GYRO.port);
+	MyGyro gyro = new MyGyro(RobotMap.SensorMap.GYRO.port);
+	
+	public void init() {
+		gyro.initGyro();
+		gyro.setSensitivity(0.00165);
+	}
 	
 	public void initDefaultCommand() {
 
@@ -81,5 +95,6 @@ public class ChassisSubsystem extends R_Subsystem {
 		SmartDashboard.putData("Left Motor PID", leftMotorPID);
 		SmartDashboard.putData("Right Motor PID", rightMotorPID);
 		SmartDashboard.putData("Gyro", gyro);
+		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
 	}
 }
