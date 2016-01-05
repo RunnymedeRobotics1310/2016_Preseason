@@ -3,11 +3,11 @@ package robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.R_Gyro;
 import robot.R_Subsystem;
 import robot.RobotMap;
 import robot.commands.JoystickCommand;
@@ -17,14 +17,6 @@ import robot.commands.JoystickCommand;
  */
 public class ChassisSubsystem extends R_Subsystem {
 
-	class MyGyro extends Gyro {
-		MyGyro(int port) {
-			super(port);
-		}
-		public double getAngle() {
-			return - super.getAngle();
-		}
-	}
 	
 	Talon leftMotor = new Talon(RobotMap.MotorMap.LEFT_MOTOR.port);
 	Talon rightMotor = new Talon(RobotMap.MotorMap.RIGHT_MOTOR.port);
@@ -49,7 +41,7 @@ public class ChassisSubsystem extends R_Subsystem {
 			rightMotor);
 
 	// Gyro
-	MyGyro gyro = new MyGyro(RobotMap.SensorMap.GYRO.port);
+	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
 	
 	public void init() {
 		gyro.initGyro();
