@@ -2,15 +2,14 @@ package robot;
 
 import edu.wpi.first.wpilibj.Gyro;
 
-public class R_Gyro extends Gyro {
-
-	public R_Gyro(int port) {
+public class MyGyro extends Gyro {
+	public MyGyro(int port) {
 		super(port);
 	}
 
-	// Invert the Gyro angle because the gyro is 
-	// mounted upside down.
+	@Override
 	public double getAngle() {
-		return - super.getAngle();
+		double angle = -super.getAngle() % 360;
+		return (angle < 0) ? angle + 360 : angle;
 	}
 }
