@@ -2,6 +2,7 @@
 package robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import robot.Robot;
 
 /**
@@ -24,6 +25,11 @@ public class JoystickCommand extends Command {
     	double turn = Robot.oi.getTurn();
     	double leftSpeed;
     	double rightSpeed;
+    	
+    	if (Robot.oi.getPOV() != -1) {
+    		Scheduler.getInstance().add(new RotateToAngle(Robot.oi.getPOV(), 3.0));
+    		return;
+    	}
     	
     	if (speed == 0) {
     		leftSpeed = -turn;

@@ -163,4 +163,9 @@ public class F310_Joystick {
 		return 0.0;
 
 	}
+	
+	public int getPOV()
+	{
+		return joystick.getPOV();
+	}
 }

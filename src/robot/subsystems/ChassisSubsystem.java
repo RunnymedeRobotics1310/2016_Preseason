@@ -77,6 +77,14 @@ public class ChassisSubsystem extends R_Subsystem {
 		}
 	}
 
+	public double getCurrentAngle() {
+		return gyro.getAngle();
+	}
+	
+	public double getAngleDifference(double targetAngle) {
+		return gyro.getAngleDifference(targetAngle);
+	}
+	
 	@Override
 	public void updateDashboard() {
 		SmartDashboard.putData("Left Motor", leftMotor);

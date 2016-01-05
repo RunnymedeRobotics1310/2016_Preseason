@@ -21,5 +21,9 @@ public class OI {
     	double joystickValue = driverStick.getAxis(Stick.RIGHT, Axis.X);
     	return Math.round(joystickValue * Math.abs(joystickValue) * 1000) / 1000.0;
     }
+
+	public int getPOV() {
+		return driverStick.getPOV();
+	}
 }
 
