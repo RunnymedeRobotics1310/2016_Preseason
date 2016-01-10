@@ -4,10 +4,10 @@ package robot.subsystems;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_Gyro;
+import robot.R_PIDInput;
 import robot.R_Subsystem;
 import robot.RobotMap;
 import robot.commands.JoystickCommand;
@@ -16,7 +16,6 @@ import robot.commands.JoystickCommand;
  *
  */
 public class ChassisSubsystem extends R_Subsystem {
-
 	
 	Talon leftMotor = new Talon(RobotMap.MotorMap.LEFT_MOTOR.port);
 	Talon rightMotor = new Talon(RobotMap.MotorMap.RIGHT_MOTOR.port);
@@ -24,22 +23,24 @@ public class ChassisSubsystem extends R_Subsystem {
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
 
-	PIDController leftMotorPID = new PIDController(0.5, 0.0, 0.0, 1.0, 
-			new PIDSource() {
-				@Override
-				public double pidGet() {
-					return leftEncoder.getRate()/1800.0;
-				}},  
-			leftMotor);
+	/*
+	 * Motor PID Controllers
+	 */
+	R_PIDInput leftPIDInput = new R_PIDInput() {
+		@Override
+		public double pidGet() { return leftEncoder.getRate()/RobotMap.EncoderMap.LEFT.maxRate; }
+		};
 	
-	PIDController rightMotorPID = new PIDController(0.5, 0.0, 0.0, 1.0, 
-			new PIDSource() {
-				@Override
-				public double pidGet() {
-					return rightEncoder.getRate()/1800.0;
-				}}, 
-			rightMotor);
+	R_PIDInput rightPIDInput = new R_PIDInput() {
+		@Override
+		public double pidGet() { return leftEncoder.getRate()/RobotMap.EncoderMap.LEFT.maxRate;	}	
+		};
+		
+	PIDController leftMotorPID = new PIDController(0.5, 0.0, 0.0, 1.0, leftPIDInput, leftMotor);
+	
+	PIDController rightMotorPID = new PIDController(0.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor); 
 
+	
 	// Gyro
 	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
 	
@@ -69,10 +70,10 @@ public class ChassisSubsystem extends R_Subsystem {
 
 		leftMotorPID.setSetpoint(leftSpeed);
 		rightMotorPID.setSetpoint(rightSpeed);
-		if (!leftMotorPID.isEnable()) {
+		if (!leftMotorPID.isEnabled()) {
 			leftMotorPID.enable();
 		}
-		if (!rightMotorPID.isEnable()) {
+		if (!rightMotorPID.isEnabled()) {
 			rightMotorPID.enable();
 		}
 	}

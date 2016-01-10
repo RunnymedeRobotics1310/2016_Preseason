@@ -1,7 +1,8 @@
 package robot;
 
-import robot.F310_Joystick.Axis;
-import robot.F310_Joystick.Stick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.R_GameController.Axis;
+import robot.R_GameController.Stick;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -9,8 +10,8 @@ import robot.F310_Joystick.Stick;
  */
 public class OI {
 	
-	F310_Joystick driverStick = new F310_Joystick(0);
-    //Xbox_Joystick operatorStick = new Xbox_Joystick(0);
+	R_GameController driverStick = new R_F310_Joystick(0);
+	//R_GameController driverStick = new R_Xbox360_Joystick(0);
     
     public double getSpeed() {
     	double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);
@@ -22,8 +23,12 @@ public class OI {
     	return Math.round(joystickValue * Math.abs(joystickValue) * 100) / 100.0;
     }
 
-	public int getPOV() {
-		return driverStick.getPOV();
+	public int getPOVAngle() {
+		return driverStick.getPOVAngle();
+	}
+	
+	public void updateDashboard() {
+		SmartDashboard.putString("Driver Controller", driverStick.toString());
 	}
 }
 

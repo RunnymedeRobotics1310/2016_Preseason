@@ -26,8 +26,8 @@ public class JoystickCommand extends Command {
     	double leftSpeed;
     	double rightSpeed;
     	
-    	if (Robot.oi.getPOV() != -1) {
-    		Scheduler.getInstance().add(new RotateToAngle(Robot.oi.getPOV(), 3.0));
+    	if (Robot.oi.getPOVAngle() != -1) {
+    		Scheduler.getInstance().add(new RotateToAngle(Robot.oi.getPOVAngle(), 3.0));
     		return;
     	}
     	

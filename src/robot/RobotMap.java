@@ -44,15 +44,17 @@ public class RobotMap {
     }
     
     public enum EncoderMap {
-    	LEFT (2, 3),
-    	RIGHT(0, 1);
+    	LEFT (2, 3, 1800.0),
+    	RIGHT(0, 1, 1800.0);
     	
     	public final int ch1;
     	public final int ch2;
+    	public final double maxRate;
     	
-    	EncoderMap(int ch1, int ch2) {
+    	EncoderMap(int ch1, int ch2, double maxRate) {
     		this.ch1 = ch1;
     		this.ch2 = ch2;
+    		this.maxRate = maxRate;
     	}
     }
     

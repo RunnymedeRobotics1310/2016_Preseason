@@ -86,6 +86,7 @@ public class Robot extends IterativeRobot {
         	r.periodic();
         	r.updateDashboard();
         }
+        oi.updateDashboard();
     }
     
     /**

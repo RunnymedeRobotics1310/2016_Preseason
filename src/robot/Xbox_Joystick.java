@@ -3,20 +3,27 @@ package robot;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Xbox_Joystick{
-	private Joystick DRIVE_STICK;
-
-	Xbox_Joystick(int port) {
-		DRIVE_STICK = new Joystick(port);
-	}
-
 	public enum Axis {
 		X, 
 		Y;
 	}
-	
+
 	public enum Stick {
 		LEFT,
 		RIGHT;
+	}
+
+	private enum axisMap {
+		LEFT_X(0), 
+		LEFT_Y(1), 
+		RIGHT_X(4), 
+		RIGHT_Y(5);
+
+		final int axisNumber;
+
+		axisMap(int axis) {
+			this.axisNumber = axis;
+		}
 	}
 
 	private enum Button {
@@ -41,76 +48,69 @@ public class Xbox_Joystick{
 	private enum triggerMap {
 		LEFT(11),
 		RIGHT(12);
-		
+
 		final int triggerNumber;
 
 		triggerMap(int buttonNumber) {
 			this.triggerNumber = buttonNumber;
 		}
 	}
-	
-	private enum axisMap {
-		LEFT_X(0), 
-		LEFT_Y(1), 
-		RIGHT_X(4), 
-		RIGHT_Y(5);
 
-		final int axisNumber;
+	private final Joystick joystick;
 
-		axisMap(int axis) {
-			this.axisNumber = axis;
-		}
-	}
-	
-	/**
-    * Get the value of a button.
-    *
-    * @param button The button to be read. [buttonMap.LEFT_STICK, buttonMap.RIGHT, etc]
-    * 
-    * @return boolean The value of the button.
-    */
-	public boolean getButton(Button button) {
-		return DRIVE_STICK.getRawButton(button.buttonNumber);
-	}
-	
-	/**
-     * Get the value of a trigger.
-     *
-     * @param trigger The trigger to be read. [triggerMap.LEFT, triggerMap.RIGHT]
-     * 
-     * @return double The value of the trigger.
-     */
-	public double getTrigger(triggerMap trigger) {
-		return DRIVE_STICK.getRawAxis(trigger.triggerNumber);
+	Xbox_Joystick(int port) {
+		joystick = new Joystick(port);
 	}
 
 	/**
-     * Get the value of the axis.
-     *
-     * @param stick The side of the joystick to read. [Stick.LEFT, Stick.RIGHT]
-     * @param axis The axis of the stick to be returned. [Axis.X, Axis.Y]
-     * 
-     * @return double The value of the axis.
-     */
+	 * Get the value of the axis.
+	 *
+	 * @param stick The side of the joystick to read. [Stick.LEFT, Stick.RIGHT]
+	 * @param axis The axis of the stick to be returned. [Axis.X, Axis.Y]
+	 * 
+	 * @return double The value of the axis.
+	 */
 	public double getAxis(Stick stick, Axis axis) {
-			switch (stick) {
-				case LEFT:
-					switch (axis) {
-						case X:
-							return DRIVE_STICK.getRawAxis(axisMap.LEFT_X.axisNumber);
-						case Y:
-							return DRIVE_STICK.getRawAxis(axisMap.LEFT_Y.axisNumber);
-					}
-				case RIGHT:
-					switch (axis) {
-						case X:
-							return DRIVE_STICK.getRawAxis(axisMap.RIGHT_X.axisNumber);
-						case Y:
-							return DRIVE_STICK.getRawAxis(axisMap.RIGHT_Y.axisNumber);
-					}
+		switch (stick) {
+		case LEFT:
+			switch (axis) {
+			case X:
+				return joystick.getRawAxis(axisMap.LEFT_X.axisNumber);
+			case Y:
+				return joystick.getRawAxis(axisMap.LEFT_Y.axisNumber);
 			}
-			
-			return 0.0;
-		
+		case RIGHT:
+			switch (axis) {
+			case X:
+				return joystick.getRawAxis(axisMap.RIGHT_X.axisNumber);
+			case Y:
+				return joystick.getRawAxis(axisMap.RIGHT_Y.axisNumber);
+			}
+		}
+
+		return 0.0;
+
+	}
+
+	/**
+	 * Get the value of a button.
+	 *
+	 * @param button The button to be read. [buttonMap.LEFT_STICK, buttonMap.RIGHT, etc]
+	 * 
+	 * @return boolean The value of the button.
+	 */
+	public boolean getButton(Button button) {
+		return joystick.getRawButton(button.buttonNumber);
+	}
+
+	/**
+	 * Get the value of a trigger.
+	 *
+	 * @param trigger The trigger to be read. [triggerMap.LEFT, triggerMap.RIGHT]
+	 * 
+	 * @return double The value of the trigger.
+	 */
+	public double getTrigger(triggerMap trigger) {
+		return joystick.getRawAxis(trigger.triggerNumber);
 	}
 }
