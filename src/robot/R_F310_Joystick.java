@@ -24,7 +24,7 @@ public class R_F310_Joystick extends R_GameController {
 
 		double axisValue = 0.0;
 		
-		// The button map changes based on the joystick mode
+		// The axis map changes based on the joystick mode
 		switch (getMode()) {
 
 		case D:
@@ -109,7 +109,7 @@ public class R_F310_Joystick extends R_GameController {
 			}
 
 
-			// Unknown joystick mode.  There is no button pressed.	
+		// Unknown joystick mode.  There is no button pressed.	
 		default: return false;
 		}
 	}
