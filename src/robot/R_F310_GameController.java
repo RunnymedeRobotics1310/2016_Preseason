@@ -2,7 +2,7 @@ package robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class R_F310_Joystick extends R_GameController {
+public class R_F310_GameController extends R_GameController {
 
 	private enum JoystickMode {
 		X, 
@@ -11,11 +11,11 @@ public class R_F310_Joystick extends R_GameController {
 
 	private final Joystick joystick;
 
-	public R_F310_Joystick(int port) {
+	public R_F310_GameController(int port) {
 		joystick = new Joystick(port);
 	}
 
-	public R_F310_Joystick(Joystick j) {
+	public R_F310_GameController(Joystick j) {
 		joystick = j;
 	}
 

@@ -1,6 +1,7 @@
 package robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 
 /**
  * This interface is the interface for all GameControllers.  A GameController typically has two
@@ -39,6 +40,9 @@ public abstract class R_GameController {
 		START,
 		BACK;
 	}
+	
+	private double curLeftRumble = 0.0;
+	private double curRightRumble = 0.0;
 
 	/**
 	 * Get the value of the given axis for this stick on the game controller.
@@ -101,19 +105,26 @@ public abstract class R_GameController {
 	/**
 	 * Set the Rumble value on the joystick.
 	 * <p>
-	 * Some joysticks have a rumble feature.  Implementations wishing to use this feature
-	 * should override this function.  Some joysticks have a left and right rumble value.
+	 * Some joysticks have a rumble feature.  This routines sets the joystick 
+	 * rumble on the left and right channels independently
 	 *
 	 * @param leftRumble - left rumble value between 0 and 1.0
 	 * @param rightRumble - right rumble value between 0 and 1.0
 	 */
-	public void setRumble(double leftRumble, double rightRumble) {};
+	public void setRumble(double leftRumble, double rightRumble) {
+		Joystick joystick = getRawJoystick();
+		joystick.setRumble(RumbleType.kLeftRumble,  (float) leftRumble);
+		joystick.setRumble(RumbleType.kRightRumble, (float) rightRumble);
+		
+		curLeftRumble = leftRumble;
+		curRightRumble = rightRumble;
+	};
 
 	/**
 	 * Set the Rumble value on the joystick.
 	 * <p>
-	 * Some joysticks have a single rumble feature.  Implementations wishing to use this feature
-	 * should override this function.
+	 * Some joysticks have a single rumble feature.  Both rumble values setable in the 
+	 * driverstation are set by this routine.
 	 * 
 	 * @param rumble - rumble value between 0 and 1.0
 	 */
@@ -142,11 +153,16 @@ public abstract class R_GameController {
 			povString += getPOVAngle() + " ";
 		}
 		
+		String rumbleString = "";
+		if (curLeftRumble > 0.0 || curRightRumble > 0.0) {
+			rumbleString += "R(" + curLeftRumble + "," + curRightRumble + ") ";
+		}
+		
 		return  getRawJoystick().getButtonCount()     
 				+ " (" + getAxis(Stick.LEFT,  Axis.X) + "," + getAxis(Stick.LEFT,  Axis.Y) + ")"
 				+ " (" + getAxis(Stick.RIGHT, Axis.X) + "," + getAxis(Stick.RIGHT, Axis.Y) + ")"
 				+ " (" + getTrigger(Trigger.LEFT)     + "," + getTrigger(Trigger.RIGHT) + ") "
-				+ povString + buttonString;
+				+ povString + buttonString + rumbleString;
 	}
 
 }
