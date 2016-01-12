@@ -1,12 +1,16 @@
 
 package robot.subsystems;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_Gyro;
+import robot.R_PIDController;
 import robot.R_PIDInput;
 import robot.R_Subsystem;
 import robot.RobotMap;
@@ -33,16 +37,22 @@ public class ChassisSubsystem extends R_Subsystem {
 	
 	R_PIDInput rightPIDInput = new R_PIDInput() {
 		@Override
-		public double pidGet() { return leftEncoder.getRate()/RobotMap.EncoderMap.LEFT.maxRate;	}	
+		public double pidGet() { return rightEncoder.getRate()/RobotMap.EncoderMap.RIGHT.maxRate;	}	
 		};
 		
-	PIDController leftMotorPID = new PIDController(0.5, 0.0, 0.0, 1.0, leftPIDInput, leftMotor);
+	R_PIDController leftMotorPID = new R_PIDController(0.5, 0.0, 0.0, 1.0, leftPIDInput, leftMotor);
 	
-	PIDController rightMotorPID = new PIDController(0.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor); 
+	R_PIDController rightMotorPID = new R_PIDController(0.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor); 
 
-	
+	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
+	PIDController p;
 	// Gyro
 	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
+
+	public ChassisSubsystem() {
+		pidControllers.add(leftMotorPID);
+		pidControllers.add(rightMotorPID);
+	}
 	
 	public void init() {
 		gyro.initGyro();
@@ -84,6 +94,14 @@ public class ChassisSubsystem extends R_Subsystem {
 	
 	public double getAngleDifference(double targetAngle) {
 		return gyro.getAngleDifference(targetAngle);
+	}
+	
+	@Override
+	public void periodic() {
+		// Update all of the PIDs every loop
+		for (R_PIDController pid : pidControllers) {
+			pid.calculate();
+		}
 	}
 	
 	@Override
