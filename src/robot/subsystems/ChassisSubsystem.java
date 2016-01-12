@@ -56,6 +56,7 @@ public class ChassisSubsystem extends R_Subsystem {
 
 		gyro.initGyro();
 		gyro.setSensitivity(0.00165);
+		gyro.calibrate();
 	}
 	
 	public void initDefaultCommand() {
