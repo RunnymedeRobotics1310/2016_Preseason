@@ -45,16 +45,15 @@ public class ChassisSubsystem extends R_Subsystem {
 	R_PIDController rightMotorPID = new R_PIDController(0.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor); 
 
 	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
-	PIDController p;
+
 	// Gyro
 	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
 
-	public ChassisSubsystem() {
+	public void init() {
+		
 		pidControllers.add(leftMotorPID);
 		pidControllers.add(rightMotorPID);
-	}
-	
-	public void init() {
+
 		gyro.initGyro();
 		gyro.setSensitivity(0.00165);
 	}
