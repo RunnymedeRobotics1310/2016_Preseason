@@ -1,4 +1,3 @@
-
 package robot.subsystems;
 
 import java.util.ArrayList;
@@ -6,13 +5,13 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_Gyro;
 import robot.R_PIDController;
 import robot.R_PIDInput;
 import robot.R_Subsystem;
+import robot.R_Talon;
 import robot.RobotMap;
 import robot.commands.JoystickCommand;
 
@@ -21,8 +20,8 @@ import robot.commands.JoystickCommand;
  */
 public class ChassisSubsystem extends R_Subsystem {
 	
-	Talon leftMotor = new Talon(RobotMap.MotorMap.LEFT_MOTOR.port);
-	Talon rightMotor = new Talon(RobotMap.MotorMap.RIGHT_MOTOR.port);
+	Talon leftMotor = new R_Talon(RobotMap.MotorMap.LEFT_MOTOR);
+	Talon rightMotor = new R_Talon(RobotMap.MotorMap.RIGHT_MOTOR);
 	DigitalInput limitSwitch = new DigitalInput(RobotMap.SensorMap.LIMIT_SWITCH.port);
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
@@ -68,14 +67,6 @@ public class ChassisSubsystem extends R_Subsystem {
 		if (!limitSwitch.get()) {
 			leftSpeed = 0;
 			rightSpeed = 0;
-		}
-
-		if (RobotMap.MotorMap.LEFT_MOTOR.inverted) {
-			leftSpeed *= -1;
-		}
-
-		if (RobotMap.MotorMap.RIGHT_MOTOR.inverted) {
-			rightSpeed *= -1;
 		}
 
 		leftMotorPID.setSetpoint(leftSpeed);
