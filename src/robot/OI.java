@@ -10,8 +10,8 @@ import robot.R_GameController.Stick;
  */
 public class OI {
 	
-	R_GameController driverStick = new R_F310_GameController(0);
-	//R_GameController driverStick = new R_Xbox360_Joystick(0);
+	//R_GameController driverStick = new R_F310_GameController(0);
+	R_GameController driverStick = new R_Xbox360_GameController(0);
     
     public double getSpeed() {
     	double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);

@@ -31,13 +31,14 @@ public class JoystickCommand extends Command {
     		return;
     	}
     	
-    	if (speed == 0) {
+    	if (Math.abs(speed) < 0.03) {
     		leftSpeed = turn;
     		rightSpeed = -turn;
     	} else {
     		leftSpeed = (turn < 0) ? speed * (1 + turn) : speed;
     		rightSpeed = (turn > 0) ? speed * (1 - turn) : speed;
     	}
+    	
     	Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
 	}
 

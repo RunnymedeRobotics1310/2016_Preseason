@@ -40,9 +40,9 @@ public class ChassisSubsystem extends R_Subsystem {
 		public double pidGet() { return rightEncoder.getRate()/RobotMap.EncoderMap.RIGHT.maxRate;	}	
 		};
 		
-	R_PIDController leftMotorPID = new R_PIDController(0.5, 0.0, 0.0, 1.0, leftPIDInput, leftMotor);
+	R_PIDController leftMotorPID = new R_PIDController(1.0, 0.0, 0.0, 1.0, leftPIDInput, leftMotor);
 	
-	R_PIDController rightMotorPID = new R_PIDController(0.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor); 
+	R_PIDController rightMotorPID = new R_PIDController(1.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor); 
 
 	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
 
@@ -55,7 +55,7 @@ public class ChassisSubsystem extends R_Subsystem {
 		pidControllers.add(rightMotorPID);
 
 		gyro.initGyro();
-		gyro.setSensitivity(0.00165);
+		gyro.setSensitivity(0.00165 * (360.0/365.0));
 		gyro.calibrate();
 	}
 	
