@@ -31,6 +31,12 @@ public class JoystickCommand extends Command {
     		return;
     	}
     	
+    	// If the user is not turning, then follow the gyro using the GoStraight command.
+    	if (Math.abs(turn) < 0.03) {
+    		Scheduler.getInstance().add(new GoStraightCommand(Robot.chassisSubsystem.getCurrentAngle()));
+    		return;
+    	}
+    	
     	if (Math.abs(speed) < 0.03) {
     		leftSpeed = turn;
     		rightSpeed = -turn;

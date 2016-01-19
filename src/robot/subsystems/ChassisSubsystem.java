@@ -36,7 +36,7 @@ public class ChassisSubsystem extends R_Subsystem {
 	
 	R_PIDInput rightPIDInput = new R_PIDInput() {
 		@Override
-		public double pidGet() { return rightEncoder.getRate()/RobotMap.EncoderMap.RIGHT.maxRate;	}	
+		public double pidGet() { return - rightEncoder.getRate()/RobotMap.EncoderMap.RIGHT.maxRate;	}	
 		};
 		
 	R_PIDController leftMotorPID = new R_PIDController(1.0, 0.0, 0.0, 1.0, leftPIDInput, leftMotor);
@@ -68,9 +68,13 @@ public class ChassisSubsystem extends R_Subsystem {
 			leftSpeed = 0;
 			rightSpeed = 0;
 		}
+		
+		SmartDashboard.putNumber("LeftMotorSpeed", leftSpeed);
+		SmartDashboard.putNumber("RightMotorSpeed", rightSpeed);
 
 		leftMotorPID.setSetpoint(leftSpeed);
 		rightMotorPID.setSetpoint(rightSpeed);
+		
 		if (!leftMotorPID.isEnabled()) {
 			leftMotorPID.enable();
 		}
