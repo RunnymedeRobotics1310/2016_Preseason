@@ -3,46 +3,41 @@ package robot.commands.auto;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Robot;
 
-public class DriveToUltraDistance extends DriveToDistance {
+public class DriveToUltraDistance extends AutoGoStraightCommand {
 
-	double uDistance; // Ultrasonic distance
-	double velocity;
-	double angleSetpoint;
-	double pidOutputTurn;
 
-	public DriveToUltraDistance(double angle, double distance, double speed) {
-		super(distance, angle, speed);
-		requires(Robot.chassisSubsystem);
-		this.angleSetpoint = angle;
+	/**
+	 * The distance to drive to.
+	 */
+	private double distanceSetpoint;
+
+	/**
+	 * The constructor for a new DriveToDistance command.
+	 * 
+	 * @param distance
+	 *            The distance to drive to.
+	 * @param angle
+	 *            The angle to drive at (in degrees).
+	 * @param speed
+	 *            The speed at which to drive.
+	 */
+	public DriveToUltraDistance(double speed, double angle, double distance) {
+		super(speed, angle);
+		this.distanceSetpoint = distance;
+	}
+
+	/**
+	 * Gets the distance set point.
+	 * 
+	 * @return the distance set point.
+	 */
+	public double getDistance() {
+		return distanceSetpoint;
 	}
 
 	// Called once after isFinished returns true
-	@Override
-	protected void end() {
-
-	}
-
-	@Override
-	protected void execute() {
-		double leftSpeed;
-		double rightSpeed;
-		SmartDashboard.putNumber("Ultrasonic distance", uDistance);
-	}
-
-	@Override
-	protected void initialize() {
-
-	}
-
-	@Override
-	protected void interrupted() {
-
-	}
-
-	@Override
 	protected boolean isFinished() {
-
-		return false;
+		return (distanceSetpoint >= Robot.chassisSubsystem.getUltraSonicDistance());
 	}
 
 }

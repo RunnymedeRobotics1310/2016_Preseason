@@ -50,7 +50,6 @@ public class ChassisSubsystem extends R_Subsystem {
 
 	R_PIDController rightMotorPID = new R_PIDController(1.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor);
 
-
 	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
 
 	// Gyro
@@ -91,11 +90,15 @@ public class ChassisSubsystem extends R_Subsystem {
 	public double getAngleDifference(double targetAngle) {
 		return gyro.getAngleDifference(targetAngle);
 	}
-	
+
 	public boolean getFrontLimit() {
 		return !rightLimitSwitch.get() || !leftLimitSwitch.get();
 	}
-	
+
+	public double getUltraSonicDistance() {
+		return this.ultrasonic.getDistance();
+	}
+
 	@Override
 	public void periodic() {
 		// Update all of the PIDs every loop
