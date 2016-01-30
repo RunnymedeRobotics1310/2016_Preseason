@@ -22,7 +22,8 @@ public class ChassisSubsystem extends R_Subsystem {
 	
 	Talon leftMotor = new R_Talon(RobotMap.MotorMap.LEFT_MOTOR);
 	Talon rightMotor = new R_Talon(RobotMap.MotorMap.RIGHT_MOTOR);
-	DigitalInput limitSwitch = new DigitalInput(RobotMap.SensorMap.LIMIT_SWITCH.port);
+	DigitalInput leftLimitSwitch = new DigitalInput(RobotMap.SensorMap.LEFT_LIMIT_SWITCH.port);
+	DigitalInput rightLimitSwitch = new DigitalInput(RobotMap.SensorMap.RIGHT_LIMIT_SWITCH.port);
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
 
@@ -40,7 +41,6 @@ public class ChassisSubsystem extends R_Subsystem {
 		};
 		
 	R_PIDController leftMotorPID = new R_PIDController(1.0, 0.0, 0.0, 1.0, leftPIDInput, leftMotor);
-	
 	R_PIDController rightMotorPID = new R_PIDController(1.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor); 
 
 	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
@@ -49,7 +49,6 @@ public class ChassisSubsystem extends R_Subsystem {
 	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
 
 	public void init() {
-		
 		pidControllers.add(leftMotorPID);
 		pidControllers.add(rightMotorPID);
 
@@ -59,16 +58,10 @@ public class ChassisSubsystem extends R_Subsystem {
 	}
 	
 	public void initDefaultCommand() {
-
 		setDefaultCommand(new JoystickCommand());
 	}
 
 	public void setSpeed(double leftSpeed, double rightSpeed) {
-		if (!limitSwitch.get()) {
-			leftSpeed = 0;
-			rightSpeed = 0;
-		}
-		
 		SmartDashboard.putNumber("LeftMotorSpeed", leftSpeed);
 		SmartDashboard.putNumber("RightMotorSpeed", rightSpeed);
 
@@ -91,6 +84,10 @@ public class ChassisSubsystem extends R_Subsystem {
 		return gyro.getAngleDifference(targetAngle);
 	}
 	
+	public boolean getFrontLimit() {
+		return !rightLimitSwitch.get() || !leftLimitSwitch.get();
+	}
+	
 	@Override
 	public void periodic() {
 		// Update all of the PIDs every loop
@@ -103,7 +100,8 @@ public class ChassisSubsystem extends R_Subsystem {
 	public void updateDashboard() {
 		SmartDashboard.putData("Left Motor", leftMotor);
 		SmartDashboard.putData("Right Motor", rightMotor);
-		SmartDashboard.putData("Limit Switch", limitSwitch);
+		SmartDashboard.putData("Left Limit Switch", leftLimitSwitch);
+		SmartDashboard.putData("Right Limit Switch", rightLimitSwitch);
 		SmartDashboard.putData("Left Encoder", leftEncoder);
 		SmartDashboard.putData("Right Encoder", rightEncoder);
 		SmartDashboard.putData("Left Motor PID", leftMotorPID);

@@ -34,7 +34,8 @@ public class RobotMap {
     	GYRO         (0), 
     	
     	// Digital Ports
-    	LIMIT_SWITCH (8); 
+    	LEFT_LIMIT_SWITCH(8),
+    	RIGHT_LIMIT_SWITCH(9); 
     	
         public final int port;
 
