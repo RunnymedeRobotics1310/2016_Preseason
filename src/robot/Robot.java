@@ -8,6 +8,10 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import robot.commands.auto.DriveToDistance;
+import robot.oi.AutoChooser;
+import robot.oi.OI;
 import robot.subsystems.ChassisSubsystem;
 import robot.subsystems.ServoSubsystem;
 
@@ -24,13 +28,24 @@ public class Robot extends IterativeRobot {
 	public static final ServoSubsystem servoSubsystem = new ServoSubsystem(); 
 	public static OI oi;
 
+	AutoChooser autoChooser = new AutoChooser();
+
+	public Command getAutoCommand() { return autoChooser.getSelectedCommand(); }
+	
 	public static List<R_Subsystem> subsystemList = new ArrayList<R_Subsystem>();
 	
     Command autonomousCommand;
 
     public void autonomousInit() {
+        autonomousCommand = getAutoCommand();
+        
+        autonomousCommand = new DriveToDistance(0.5, 0.0, 5);
+        
+        System.out.println("Chosen auto command: " + autonomousCommand);
         // schedule the autonomous command
-        if (autonomousCommand != null) autonomousCommand.start();
+        Scheduler.getInstance().add(autonomousCommand);
+        
+        SmartDashboard.putData(Scheduler.getInstance());
     }
 	
 	/**
@@ -38,6 +53,13 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
+        for (R_Subsystem r: subsystemList) {
+        	r.updateDashboard();
+        }
+        oi.updateDashboard();
+        
+        SmartDashboard.putData(Scheduler.getInstance());
     }
 
     /**
@@ -57,9 +79,9 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
+    	oi = new OI();
         // instantiate the command used for the autonomous period
-        autonomousCommand = null; //FIXME: add the auto command
+        //autonomousCommand = null; //FIXME: add the auto command
         // Add all the subsystems to the subsystem list.
         subsystemList.add(chassisSubsystem);
         subsystemList.add(servoSubsystem);

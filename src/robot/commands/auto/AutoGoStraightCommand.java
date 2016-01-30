@@ -1,7 +1,5 @@
-package robot.commands;
 
-import java.util.ArrayList;
-import java.util.List;
+package robot.commands.auto;
 
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
@@ -13,47 +11,54 @@ import robot.Robot;
 /**
  *
  */
-public class GoStraightCommand extends Command {
+public class AutoGoStraightCommand extends Command {
 
-	double angleSetpoint;
+	private static double pidAngleSetpoint;
+	private static double pidOutputTurn;
 
-	double pidOutputTurn;
+	private final double angleSetpoint;
+	private final double speedSetpoint;
+	
 	/*
-	 * Motor PID Controllers
+	 * Angle PID Controller
+	 * 
+	 * These controllers are declared as static so that they can be adjusted in the console
 	 */
-	R_PIDInput gyroPIDInput = new R_PIDInput() {
+	private static R_PIDInput gyroPIDInput = new R_PIDInput() {
 		@Override
 		public double pidGet() {
-			return -Robot.chassisSubsystem.getAngleDifference(angleSetpoint) / 180.0;
+			return -Robot.chassisSubsystem.getAngleDifference(pidAngleSetpoint) / 180.0;
 		}
 	};
 
-	PIDOutput gyroPIDOutput = new PIDOutput() {
+	private static PIDOutput gyroPIDOutput = new PIDOutput() {
 		@Override
 		public void pidWrite(double output) {
 			pidOutputTurn = output;
 		}
 	};
 
-	R_PIDController gyroPID = new R_PIDController(30.0, 3.0, 0.0, 1.0, gyroPIDInput, gyroPIDOutput);
+	private static R_PIDController gyroPID = new R_PIDController(30.0, 3.0, 0.0, 1.0, gyroPIDInput, gyroPIDOutput);
 
-	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
-
-	public GoStraightCommand(double angle) {
+	public AutoGoStraightCommand(double speed, double angle) {
 		requires(Robot.chassisSubsystem);
 		this.angleSetpoint = angle;
+		this.speedSetpoint = speed;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		System.out.println("AutoGoStraightCommand init();");
 		gyroPID.reset();
+		pidAngleSetpoint = angleSetpoint;
 		gyroPID.enable();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
-		double speed = Robot.oi.getSpeed();
+		System.out.println("AutoGoStraightCommand execute();");
+		
+		double speed = speedSetpoint;
 		double leftSpeed;
 		double rightSpeed;
 
@@ -84,14 +89,8 @@ public class GoStraightCommand extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		double turn = Robot.oi.getTurn();
-		if (Math.abs(turn) > 0.03) {
-			gyroPID.disable();
-			SmartDashboard.putData("Gyro PID", gyroPID);
-			return true;
-		}
+		System.out.println("AutoGoStraightCommand doesn't finish!");
 		return false;
-
 	}
 
 	// Called once after isFinished returns true
