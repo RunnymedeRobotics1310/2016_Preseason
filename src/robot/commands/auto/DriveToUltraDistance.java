@@ -7,13 +7,12 @@ import robot.Robot;
 public class DriveToUltraDistance extends DriveToDistance {
 
     double uDistance; // Ultrasonic distance
-    double distance;
     double velocity;
     double angleSetpoint;
     double pidOutputTurn;
 
-    public DriveToUltraDistance(double angle) {
-	super(distance, angle, angle);
+    public DriveToUltraDistance(double angle, double distance, double speed) {
+	super(distance, angle, speed);
 	requires(Robot.chassisSubsystem);
 	this.angleSetpoint = angle;
     }
