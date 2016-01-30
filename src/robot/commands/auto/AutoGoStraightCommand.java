@@ -40,7 +40,7 @@ public class AutoGoStraightCommand extends Command {
 
 	private static R_PIDController gyroPID = new R_PIDController(30.0, 3.0, 0.0, 1.0, gyroPIDInput, gyroPIDOutput);
 
-	public AutoGoStraightCommand(double angle, double speed) {
+	public AutoGoStraightCommand(double speed, double angle) {
 		requires(Robot.chassisSubsystem);
 		this.angleSetpoint = angle;
 		this.speedSetpoint = speed;
