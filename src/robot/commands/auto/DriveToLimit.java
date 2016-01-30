@@ -1,7 +1,6 @@
 package robot.commands.auto;
 
 import robot.Robot;
-import robot.commands.GoStraightCommand;
 
 public class DriveToLimit extends AutoGoStraightCommand {	
     public DriveToLimit(double speed, double angle) {

@@ -1,6 +1,5 @@
 package robot.commands.auto;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Robot;
 
 public class DriveToUltraDistance extends AutoGoStraightCommand {
