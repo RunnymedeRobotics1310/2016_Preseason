@@ -13,12 +13,12 @@ public class DriveToUltraDistance extends AutoGoStraightCommand {
 	/**
 	 * The constructor for a new DriveToDistance command.
 	 * 
-	 * @param distance
-	 *            The distance to drive to.
-	 * @param angle
-	 *            The angle to drive at (in degrees).
 	 * @param speed
 	 *            The speed at which to drive.
+	 * @param angle
+	 *            The angle to drive at (in degrees).
+	 * @param distance
+	 *            The distance to drive to.
 	 */
 	public DriveToUltraDistance(double speed, double angle, double distance) {
 		super(speed, angle);

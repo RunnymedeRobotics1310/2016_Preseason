@@ -114,7 +114,7 @@ public class ChassisSubsystem extends R_Subsystem {
 	 * @return the approximate distance.
 	 */
 	public double getEncoderDistance() {
-		return (this.leftEncoder.getDistance() + this.rightEncoder.getDistance()) / 2;
+		return (this.leftEncoder.getDistance() + this.rightEncoder.getDistance()) / 2.0 / RobotMap.EncoderMap.LEFT.countsPerInch;
 	}
 
 	/**
