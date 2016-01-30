@@ -32,9 +32,10 @@ public class RobotMap {
     public enum SensorMap {
     	// Analog Ports
     	GYRO         (0), 
+    	ULTRASONIC   (1),
     	
     	// Digital Ports
-    	LIMIT_SWITCH (8); 
+    	LIMIT_SWITCH (8);
     	
         public final int port;
 
