@@ -26,6 +26,7 @@ public class ChassisSubsystem extends R_Subsystem {
 	DigitalInput limitSwitch = new DigitalInput(RobotMap.SensorMap.LIMIT_SWITCH.port);
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
+	R_Ultrasonic ultrasonic = new R_Ultrasonic(RobotMap.SensorMap.ULTRASONIC.port);
 
 	/*
 	 * Motor PID Controllers
@@ -53,8 +54,6 @@ public class ChassisSubsystem extends R_Subsystem {
 	// Gyro
 	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
 
-	R_Ultrasonic r = new R_Ultrasonic(5);
-
 	public void init() {
 		pidControllers.add(leftMotorPID);
 		pidControllers.add(rightMotorPID);
@@ -65,7 +64,6 @@ public class ChassisSubsystem extends R_Subsystem {
 	}
 
 	public void initDefaultCommand() {
-
 		setDefaultCommand(new JoystickCommand());
 	}
 
@@ -114,7 +112,7 @@ public class ChassisSubsystem extends R_Subsystem {
 	public double getEncoderDistance() {
 		return (this.leftEncoder.getDistance() + this.rightEncoder.getDistance()) / 2;
 	}
-	
+
 	/**
 	 * Resets the encoders.
 	 */
