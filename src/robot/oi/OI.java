@@ -1,5 +1,6 @@
 package robot.oi;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_GameController;
 import robot.R_GameController.Axis;
@@ -14,9 +15,7 @@ public class OI {
 
 	// R_GameController driverStick = new R_F310_GameController(0);
 	R_GameController driverStick = new R_Xbox360_GameController(0);
-
-	AutoChooser autoChooser = new AutoChooser();
-
+	
 	public double getSpeed() {
 		double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);
 		return -Math.round(joystickValue * Math.abs(joystickValue) * 100) / 100.0;

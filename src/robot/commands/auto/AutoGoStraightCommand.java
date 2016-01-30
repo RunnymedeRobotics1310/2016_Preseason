@@ -48,6 +48,7 @@ public class AutoGoStraightCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+		System.out.println("AutoGoStraightCommand init();");
 		gyroPID.reset();
 		pidAngleSetpoint = angleSetpoint;
 		gyroPID.enable();
@@ -55,7 +56,8 @@ public class AutoGoStraightCommand extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
+		System.out.println("AutoGoStraightCommand execute();");
+		
 		double speed = speedSetpoint;
 		double leftSpeed;
 		double rightSpeed;
@@ -87,14 +89,8 @@ public class AutoGoStraightCommand extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		double turn = Robot.oi.getTurn();
-		if (Math.abs(turn) > 0.03) {
-			gyroPID.disable();
-			SmartDashboard.putData("Gyro PID", gyroPID);
-			return true;
-		}
+		System.out.println("AutoGoStraightCommand doesn't finish!");
 		return false;
-
 	}
 
 	// Called once after isFinished returns true
