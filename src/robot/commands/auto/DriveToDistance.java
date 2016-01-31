@@ -26,6 +26,12 @@ public class DriveToDistance extends AutoGoStraightCommand {
 		this.distanceSetpoint = distance;
 	}
 
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		System.out.println("DriveToDistance init();");
+		super.initialize();
+	}
+
 	/**
 	 * Gets the distance set point.
 	 * 
@@ -37,7 +43,7 @@ public class DriveToDistance extends AutoGoStraightCommand {
 
 	// Called once after isFinished returns true
 	protected boolean isFinished() {
-		return true;
+		return false;
 		/*System.out.println("DriveToDistance isFinished();");
 		return (distanceSetpoint <= Robot.chassisSubsystem.getEncoderDistance());
 	*/
