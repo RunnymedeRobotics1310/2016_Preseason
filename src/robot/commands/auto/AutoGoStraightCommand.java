@@ -38,7 +38,7 @@ public class AutoGoStraightCommand extends Command {
 		}
 	};
 
-	private static R_PIDController gyroPID = new R_PIDController(30.0, 3.0, 0.0, 1.0, gyroPIDInput, gyroPIDOutput);
+	public static R_PIDController autoGyroPID = new R_PIDController(30.0, 3.0, 0.0, 1.0, gyroPIDInput, gyroPIDOutput);
 
 	public AutoGoStraightCommand(double speed, double angle) {
 		requires(Robot.chassisSubsystem);
@@ -49,9 +49,9 @@ public class AutoGoStraightCommand extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		System.out.println("AutoGoStraightCommand init();");
-		gyroPID.reset();
+		autoGyroPID.reset();
 		pidAngleSetpoint = angleSetpoint;
-		gyroPID.enable();
+		autoGyroPID.enable();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -62,7 +62,7 @@ public class AutoGoStraightCommand extends Command {
 		double leftSpeed;
 		double rightSpeed;
 
-		gyroPID.calculate();
+		autoGyroPID.calculate();
 
 		SmartDashboard.putNumber("Angle setpoint", angleSetpoint);
 		SmartDashboard.putNumber("Angle difference", -Robot.chassisSubsystem.getAngleDifference(angleSetpoint));
@@ -78,13 +78,15 @@ public class AutoGoStraightCommand extends Command {
 			leftSpeed = turn * 0.25;
 			rightSpeed = -turn * 0.25;
 		} else {
-			leftSpeed = (turn < 0) ? speed * (1 + turn) : speed;
-			rightSpeed = (turn > 0) ? speed * (1 - turn) : speed;
+			leftSpeed  = (turn < 0) ? speed * (1 + turn) : speed;
+			rightSpeed = (turn < 0) ? speed              : speed * (1 - turn);
 		}
+		
+		System.out.println("leftSpeed: " + leftSpeed + " Right Speed :" + rightSpeed);
 
 		Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
 
-		SmartDashboard.putData("Gyro PID", gyroPID);
+		SmartDashboard.putData("Gyro PID", autoGyroPID);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

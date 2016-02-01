@@ -1,6 +1,5 @@
 package robot.oi;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_GameController;
 import robot.R_GameController.Axis;
@@ -30,6 +29,16 @@ public class OI {
 		return driverStick.getPOVAngle();
 	}
 
+	/**
+	 * Update the periodic running elements of the dashboard
+	 * <p>
+	 * i.e. all toggle buttons
+	 */
+	public void periodic() {}
+	
+	/**
+	 * Put any items on the dashboard
+	 */
 	public void updateDashboard() {
 		SmartDashboard.putString("Driver Controller", driverStick.toString());
 	}

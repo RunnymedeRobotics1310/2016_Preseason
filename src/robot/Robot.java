@@ -28,14 +28,12 @@ public class Robot extends IterativeRobot {
 	public static final ServoSubsystem servoSubsystem = new ServoSubsystem(); 
 	public static OI oi;
 
-	AutoChooser autoChooser = new AutoChooser();
-
-	public Command getAutoCommand() { return autoChooser.getSelectedCommand(); }
-	
 	public static List<R_Subsystem> subsystemList = new ArrayList<R_Subsystem>();
-	
-    Command autonomousCommand;
 
+	AutoChooser autoChooser = new AutoChooser();
+	
+	Command autonomousCommand;
+	
     public void autonomousInit() {
         autonomousCommand = getAutoCommand();
         
@@ -45,40 +43,40 @@ public class Robot extends IterativeRobot {
         // schedule the autonomous command
         Scheduler.getInstance().add(autonomousCommand);
         
-        SmartDashboard.putData(Scheduler.getInstance());
-    }
-	
-	/**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-        
-        for (R_Subsystem r: subsystemList) {
-        	r.updateDashboard();
-        }
-        oi.updateDashboard();
-        
-        SmartDashboard.putData(Scheduler.getInstance());
+        updateDashboard();
     }
 
     /**
+     * This function is called periodically during autonomous
+     */
+    public void autonomousPeriodic() {
+    	subsystemPeriodic();
+    	updateDashboard();
+    }
+	
+	/**
      * This function is called when the disabled button is hit.
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
+    	updateDashboard();
     }
 
     public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+    	updateDashboard();
 	}
+
+    public Command getAutoCommand() { return autoChooser.getSelectedCommand(); }
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+    	
+    	System.out.println("Initialize Robot");
+    	
     	oi = new OI();
         // instantiate the command used for the autonomous period
         //autonomousCommand = null; //FIXME: add the auto command
@@ -89,6 +87,8 @@ public class Robot extends IterativeRobot {
         for (R_Subsystem s: subsystemList) {
         	s.init();
         }
+
+        updateDashboard();
     }
 
     public void teleopInit() {
@@ -97,18 +97,16 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+
+        updateDashboard();
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
-        for (R_Subsystem r: subsystemList) {
-        	r.periodic();
-        	r.updateDashboard();
-        }
-        oi.updateDashboard();
+    	subsystemPeriodic();
+    	updateDashboard();
     }
     
     /**
@@ -116,5 +114,24 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    private void subsystemPeriodic() {
+    	// update all subsystem runtime data.
+        for (R_Subsystem r: subsystemList) {
+        	r.periodic();
+        }
+        oi.periodic();
+    }
+
+    private void updateDashboard() {
+    	// update all subsystems and the OI dashboard items.
+        for (R_Subsystem r: subsystemList) {
+        	r.updateDashboard();
+        }
+        oi.updateDashboard();
+
+        // Put the currently scheduled commands on the dashboard
+        SmartDashboard.putData("SchedulerCommands", Scheduler.getInstance());
     }
 }
