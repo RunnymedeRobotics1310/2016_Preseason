@@ -16,7 +16,6 @@ public class JoystickCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	System.out.println("Joystick command started");
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,6 +25,10 @@ public class JoystickCommand extends Command {
     	double turn = Robot.oi.getTurn();
     	double leftSpeed;
     	double rightSpeed;
+    	
+    	if (Robot.oi.getGyroReset()) {
+    		Robot.chassisSubsystem.resetGyro();
+    	}
     	
     	if (Robot.oi.getPOVAngle() != -1) {
     		Scheduler.getInstance().add(new RotateToAngle(Robot.oi.getPOVAngle(), 3.0));
