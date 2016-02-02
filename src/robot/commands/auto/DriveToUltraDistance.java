@@ -36,7 +36,9 @@ public class DriveToUltraDistance extends AutoGoStraightCommand {
 
 	// Called once after isFinished returns true
 	protected boolean isFinished() {
-		return (distanceSetpoint <= Robot.chassisSubsystem.getUltraSonicDistance());
+		
+		// Stop 4in early because it takes the robot 4 inches to stop.
+		return (distanceSetpoint-4.0 <= Robot.chassisSubsystem.getUltraSonicDistance());
 	}
 
 }

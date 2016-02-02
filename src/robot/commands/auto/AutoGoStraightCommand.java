@@ -11,7 +11,7 @@ import robot.Robot;
 /**
  *
  */
-public class AutoGoStraightCommand extends Command {
+public abstract class AutoGoStraightCommand extends Command {
 
 	private static double pidAngleSetpoint;
 	private static double pidOutputTurn;
@@ -38,7 +38,7 @@ public class AutoGoStraightCommand extends Command {
 		}
 	};
 
-	private static R_PIDController gyroPID = new R_PIDController(30.0, 3.0, 0.0, 1.0, gyroPIDInput, gyroPIDOutput);
+	public static R_PIDController autoGyroPID = new R_PIDController(30.0, 3.0, 0.0, 1.0, gyroPIDInput, gyroPIDOutput);
 
 	public AutoGoStraightCommand(double speed, double angle) {
 		requires(Robot.chassisSubsystem);
@@ -48,21 +48,18 @@ public class AutoGoStraightCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		System.out.println("AutoGoStraightCommand init();");
-		gyroPID.reset();
+		autoGyroPID.reset();
 		pidAngleSetpoint = angleSetpoint;
-		gyroPID.enable();
+		autoGyroPID.enable();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		System.out.println("AutoGoStraightCommand execute();");
-		
 		double speed = speedSetpoint;
 		double leftSpeed;
 		double rightSpeed;
 
-		gyroPID.calculate();
+		autoGyroPID.calculate();
 
 		SmartDashboard.putNumber("Angle setpoint", angleSetpoint);
 		SmartDashboard.putNumber("Angle difference", -Robot.chassisSubsystem.getAngleDifference(angleSetpoint));
@@ -78,23 +75,24 @@ public class AutoGoStraightCommand extends Command {
 			leftSpeed = turn * 0.25;
 			rightSpeed = -turn * 0.25;
 		} else {
-			leftSpeed = (turn < 0) ? speed * (1 + turn) : speed;
-			rightSpeed = (turn > 0) ? speed * (1 - turn) : speed;
+			leftSpeed  = (turn < 0) ? speed * (1 + turn) : speed;
+			rightSpeed = (turn < 0) ? speed              : speed * (1 - turn);
 		}
-
+		
 		Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
 
-		SmartDashboard.putData("Gyro PID", gyroPID);
+		SmartDashboard.putData("Gyro PID", autoGyroPID);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
+	@Override
 	protected boolean isFinished() {
-		System.out.println("AutoGoStraightCommand doesn't finish!");
 		return false;
 	}
 
 	// Called once after isFinished returns true
-	protected void end() {
+	public void end() {
+	    Robot.chassisSubsystem.setSpeed(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same

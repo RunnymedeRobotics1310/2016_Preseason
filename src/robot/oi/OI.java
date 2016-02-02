@@ -1,9 +1,9 @@
 package robot.oi;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.R_GameController;
 import robot.R_GameController.Axis;
+import robot.R_GameController.Button;
 import robot.R_GameController.Stick;
 import robot.R_Xbox360_GameController;
 
@@ -12,7 +12,7 @@ import robot.R_Xbox360_GameController;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-
+	
 	// R_GameController driverStick = new R_F310_GameController(0);
 	R_GameController driverStick = new R_Xbox360_GameController(0);
 	
@@ -29,7 +29,21 @@ public class OI {
 	public int getPOVAngle() {
 		return driverStick.getPOVAngle();
 	}
+	
+	public boolean getGyroReset() {
+		return driverStick.getButton(Button.BACK);
+	}
 
+	/**
+	 * Update the periodic running elements of the dashboard
+	 * <p>
+	 * i.e. all toggle buttons
+	 */
+	public void periodic() {}
+	
+	/**
+	 * Put any items on the dashboard
+	 */
 	public void updateDashboard() {
 		SmartDashboard.putString("Driver Controller", driverStick.toString());
 	}

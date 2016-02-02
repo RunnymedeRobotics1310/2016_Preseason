@@ -1,5 +1,7 @@
 package robot.commands.auto;
 
+import robot.Robot;
+
 /**
  * Drives to a specified distance using encoder counts.
  */
@@ -22,8 +24,13 @@ public class DriveToDistance extends AutoGoStraightCommand {
 	 */
 	public DriveToDistance(double speed, double angle, double distance) {
 		super(speed, angle);
-		System.out.println("Construct DriveToDistance");
 		this.distanceSetpoint = distance;
+	}
+
+	// Called just before this Command runs the first time
+	protected void initialize() {
+		Robot.chassisSubsystem.resetEncoders();
+		super.initialize();
 	}
 
 	/**
@@ -37,9 +44,6 @@ public class DriveToDistance extends AutoGoStraightCommand {
 
 	// Called once after isFinished returns true
 	protected boolean isFinished() {
-		return true;
-		/*System.out.println("DriveToDistance isFinished();");
 		return (distanceSetpoint <= Robot.chassisSubsystem.getEncoderDistance());
-	*/
 	}
 }
