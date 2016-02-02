@@ -122,6 +122,7 @@ public class Robot extends IterativeRobot {
         	r.periodic();
         }
         oi.periodic();
+        Scheduler.getInstance().run();
     }
 
     private void updateDashboard() {

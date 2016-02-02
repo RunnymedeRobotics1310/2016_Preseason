@@ -11,7 +11,7 @@ import robot.Robot;
 /**
  *
  */
-public class AutoGoStraightCommand extends Command {
+public abstract class AutoGoStraightCommand extends Command {
 
 	private static double pidAngleSetpoint;
 	private static double pidOutputTurn;
@@ -48,16 +48,14 @@ public class AutoGoStraightCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		System.out.println("AutoGoStraightCommand init();");
 		autoGyroPID.reset();
 		pidAngleSetpoint = angleSetpoint;
 		autoGyroPID.enable();
+		System.out.println("Auto go straight started");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		System.out.println("AutoGoStraightCommand execute();");
-		
 		double speed = speedSetpoint;
 		double leftSpeed;
 		double rightSpeed;
@@ -82,7 +80,7 @@ public class AutoGoStraightCommand extends Command {
 			rightSpeed = (turn < 0) ? speed              : speed * (1 - turn);
 		}
 		
-		System.out.println("leftSpeed: " + leftSpeed + " Right Speed :" + rightSpeed);
+		//System.out.println("leftSpeed: " + leftSpeed + " Right Speed :" + rightSpeed);
 
 		Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
 
@@ -90,13 +88,16 @@ public class AutoGoStraightCommand extends Command {
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
+	@Override
 	protected boolean isFinished() {
 		System.out.println("AutoGoStraightCommand doesn't finish!");
 		return false;
 	}
 
 	// Called once after isFinished returns true
-	protected void end() {
+	public void end() {
+	    System.out.println("Auto command ended");
+	    Robot.chassisSubsystem.setSpeed(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same

@@ -92,7 +92,9 @@ public class ChassisSubsystem extends R_Subsystem {
 	}
 
 	public boolean getFrontLimit() {
-		return !rightLimitSwitch.get() || !leftLimitSwitch.get();
+	    boolean frontLimit = !rightLimitSwitch.get() || !leftLimitSwitch.get();
+	    SmartDashboard.putBoolean("Front Limit", frontLimit);
+	    return frontLimit;
 	}
 
 	public double getUltraSonicDistance() {
@@ -138,5 +140,6 @@ public class ChassisSubsystem extends R_Subsystem {
 		SmartDashboard.putData("Gyro", gyro);
 		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonic.getDistance());
+		SmartDashboard.putNumber("Raw ultrasonic sensor voltage", ultrasonic.getVoltage());
 	}
 }
