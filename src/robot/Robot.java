@@ -30,16 +30,14 @@ public class Robot extends IterativeRobot {
 
 	public static List<R_Subsystem> subsystemList = new ArrayList<R_Subsystem>();
 
-	AutoChooser autoChooser = new AutoChooser();
+	AutoChooser autoChooser;
 	
 	Command autonomousCommand;
 	
     public void autonomousInit() {
+    	
         autonomousCommand = getAutoCommand();
         
-        autonomousCommand = new DriveToDistance(0.5, 0.0, 5);
-        
-        System.out.println("Chosen auto command: " + autonomousCommand);
         // schedule the autonomous command
         Scheduler.getInstance().add(autonomousCommand);
         
@@ -50,6 +48,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        Scheduler.getInstance().run();
     	subsystemPeriodic();
     	updateDashboard();
     }
@@ -75,9 +74,9 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
     	
-    	System.out.println("Initialize Robot");
-    	
+    	autoChooser = new AutoChooser();
     	oi = new OI();
+    	
         // instantiate the command used for the autonomous period
         //autonomousCommand = null; //FIXME: add the auto command
         // Add all the subsystems to the subsystem list.
@@ -105,6 +104,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+        Scheduler.getInstance().run();
     	subsystemPeriodic();
     	updateDashboard();
     }
@@ -122,7 +122,6 @@ public class Robot extends IterativeRobot {
         	r.periodic();
         }
         oi.periodic();
-        Scheduler.getInstance().run();
     }
 
     private void updateDashboard() {
@@ -133,6 +132,6 @@ public class Robot extends IterativeRobot {
         oi.updateDashboard();
 
         // Put the currently scheduled commands on the dashboard
-        SmartDashboard.putData("SchedulerCommands", Scheduler.getInstance());
+        //SmartDashboard.putData("SchedulerCommands", Scheduler.getInstance());
     }
 }

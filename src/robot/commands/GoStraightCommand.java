@@ -84,7 +84,6 @@ public class GoStraightCommand extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-	    System.out.println("Wrong isFinished");
 		double turn = Robot.oi.getTurn();
 		if (Math.abs(turn) > 0.03) {
 			gyroPID.disable();
