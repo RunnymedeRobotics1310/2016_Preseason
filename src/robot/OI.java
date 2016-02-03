@@ -10,7 +10,7 @@ import robot.R_GameController.Stick;
  */
 public class OI {
 	
-	R_GameController driverStick = R_GameControllerFactory.getGameController(0);
+    public R_GameController driverStick;
     
     public double getSpeed() {
     	double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);
