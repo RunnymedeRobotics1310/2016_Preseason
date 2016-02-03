@@ -7,13 +7,14 @@ public class R_GameControllerFactory {
 		Joystick newStick = new Joystick(port);
 		
 		switch (newStick.getName()){
-			case "Xbox":
+			case "Controller (XBOX 360 For Windows)":
 				return new R_Xbox360_GameController(newStick);
-			case "F310":
+			case "Logitech Extreme 3D":
+				return new R_Extreme3DPro_GameController(newStick);
+			case "Logitech F310":
 				return new R_F310_GameController(newStick);
 			default:
-				return null;
-				//TODO: figure out how to throw an error to the driverstation console.
+				return new R_Xbox360_GameController(newStick);
 		}
 	}
 }
