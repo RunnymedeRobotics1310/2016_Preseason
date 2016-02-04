@@ -1,5 +1,4 @@
-
-package robot.commands;
+package robot.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import robot.Robot;
@@ -7,48 +6,25 @@ import robot.Robot;
 /**
  *
  */
-public class ServoCommand extends Command {
+public class WaitCommand extends Command {
 
-    long startTime = 0;
-    boolean direction = false;
-
-    public ServoCommand() {
-	requires(Robot.servoSubsystem);
+    public WaitCommand(double waitTime) {
+    	this.setTimeout(waitTime);
+    	requires(Robot.chassisSubsystem);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-	startTime = System.nanoTime();
-	Robot.servoSubsystem.moveToPosition(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
-	long endTime = System.nanoTime();
-	boolean expired = false;
-	if (endTime - startTime > 3000000000L) {
-	    expired = true;
-	}
-
-	if (!expired) {
-	    return;
-	}
-
-	direction = !direction;
-
-	if (direction == true) {
-	    Robot.servoSubsystem.moveToPosition(1);
-
-	} else {
-	    Robot.servoSubsystem.moveToPosition(0);
-	}
-	startTime = endTime;
+    	Robot.chassisSubsystem.setSpeed(0, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-	return false;
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
