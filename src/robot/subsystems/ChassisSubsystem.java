@@ -98,7 +98,7 @@ public class ChassisSubsystem extends R_Subsystem {
 	}
 
 	public double getUltraSonicDistance() {
-		return this.ultrasonic.getDistance();
+		return this.ultrasonic.getRawDistance();
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class ChassisSubsystem extends R_Subsystem {
 		SmartDashboard.putData("Right Motor PID", rightMotorPID);
 		SmartDashboard.putData("Gyro", gyro);
 		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
-		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonic.getDistance());
+		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonic.getRawDistance());
 		SmartDashboard.putNumber("Raw ultrasonic sensor voltage", ultrasonic.getVoltage());
 	}
 }

@@ -21,8 +21,7 @@ public class R_Ultrasonic extends AnalogInput {
 	}
 	
 	public double getFilteredDistance() {
-		distanceStack.add(getRawDistance());
-		
+		distanceStack.add(getRawDistance());		
 		return distanceStack.getMeanDistance();
 	}
 }
