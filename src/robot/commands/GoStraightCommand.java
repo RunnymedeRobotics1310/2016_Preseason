@@ -86,8 +86,6 @@ public class GoStraightCommand extends Command {
 	protected boolean isFinished() {
 		double turn = Robot.oi.getTurn();
 		if (Math.abs(turn) > 0.03) {
-			gyroPID.disable();
-			SmartDashboard.putData("Gyro PID", gyroPID);
 			return true;
 		}
 		return false;
@@ -96,6 +94,8 @@ public class GoStraightCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		gyroPID.disable();
+		SmartDashboard.putData("Gyro PID", gyroPID);
 	}
 
 	// Called when another command which requires one or more of the same
