@@ -92,6 +92,7 @@ public abstract class AutoGoStraightCommand extends Command {
 
 	// Called once after isFinished returns true
 	public void end() {
+		autoGyroPID.disable();
 	    Robot.chassisSubsystem.setSpeed(0, 0);
 	}
 
