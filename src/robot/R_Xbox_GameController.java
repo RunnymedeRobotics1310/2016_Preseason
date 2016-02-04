@@ -2,15 +2,15 @@ package robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class R_Xbox360_GameController extends R_GameController {
+public class R_Xbox_GameController extends R_GameController {
 
 	private final Joystick joystick;
 
-	public R_Xbox360_GameController(int port) {
+	public R_Xbox_GameController(int port) {
 		joystick = new Joystick(port);
 	}
 
-	public R_Xbox360_GameController(Joystick j) {
+	public R_Xbox_GameController(Joystick j) {
 		joystick = j;
 	}
 
