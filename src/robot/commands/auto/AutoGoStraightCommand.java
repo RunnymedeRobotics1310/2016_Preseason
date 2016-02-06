@@ -19,6 +19,10 @@ public abstract class AutoGoStraightCommand extends Command {
 	private final double angleSetpoint;
 	private final double speedSetpoint;
 	
+	public enum Direction{
+	    FORWARD, BACKWARDS;
+	}
+	
 	/*
 	 * Angle PID Controller
 	 * 
@@ -90,6 +94,14 @@ public abstract class AutoGoStraightCommand extends Command {
 		return false;
 	}
 
+	public Direction getDirection(){
+	    if (speedSetpoint < 0){
+		return Direction.BACKWARDS;
+	    }
+	    else
+		return Direction.FORWARD;
+	}
+	
 	// Called once after isFinished returns true
 	public void end() {
 		autoGyroPID.disable();
