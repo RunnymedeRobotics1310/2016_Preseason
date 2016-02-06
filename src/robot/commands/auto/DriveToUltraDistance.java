@@ -41,5 +41,4 @@ public class DriveToUltraDistance extends AutoGoStraightCommand {
 	else
 	    return (distanceSetpoint + 4.0 > Robot.chassisSubsystem.getUltraSonicDistance());
     }
-
 }
