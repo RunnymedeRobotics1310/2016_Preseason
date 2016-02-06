@@ -3,10 +3,20 @@ package robot;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class R_Ultrasonic extends AnalogInput {
-	R_UltrasonicReadingsStack distanceStack = new R_UltrasonicReadingsStack(10, 0);
+	R_LowPassFilter lowPass = new R_LowPassFilter(10, 0.02);
 	
 	public R_Ultrasonic(int port) {
 		super(port);
+		reset();
+	}
+	
+	/**
+	 * Resets the lowpass filter.
+	 * 
+	 * Must be called before getDistance();
+	 */
+	public void reset() {
+		lowPass.reset(getRawDistance());
 	}
 
 	/**
@@ -20,8 +30,12 @@ public class R_Ultrasonic extends AnalogInput {
 		return (super.getVoltage() - 0.01) / 0.0094;
 	}
 	
-	public double getFilteredDistance() {
-		distanceStack.add(getRawDistance());		
-		return distanceStack.getMeanDistance();
+	/**
+	 * Gets the distance from the ultrasonic sensor and then filters it. 
+	 * 
+	 * @return Filtered distance in inches
+	 */
+	public double getDistance() {
+		return lowPass.calculate(getRawDistance());
 	}
 }
