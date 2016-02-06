@@ -1,12 +1,12 @@
 package robot;
 
 public class R_LowPassFilter {
-    double cutOff;
-    double sampleTime;
-    double yPrevious = 0;
-    double xPrevious = 0;
+    private final double cutOff;
+    private final double sampleTime;
+    private double yPrevious = 0;
+    private double xPrevious = 0;
     
-    double lastError = -1;
+    private double lastError = -1;
 
 	/*
 	 * y = [(x + xp) - (1 - {2t/T})yp]/[1 + (2t/T)]
