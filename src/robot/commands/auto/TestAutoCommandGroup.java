@@ -9,7 +9,7 @@ import robot.commands.RotateToAngle;
 public class TestAutoCommandGroup extends CommandGroup {
     
     public  TestAutoCommandGroup() {
-    	addSequential(new DriveToDistance(.5, 0.0, 192));
+    	addSequential(new DriveToDistance(.5, 0.0, 210));
     	addSequential(new RotateToAngle(90.0, 2.0));
     	addSequential(new DriveToUltraDistance(0.5, 90.0, 154.0));
     	addSequential(new RotateToAngle(0.0,4.0));
