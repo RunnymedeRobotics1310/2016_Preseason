@@ -13,7 +13,8 @@ public class AutoChooser extends SendableChooser {
 	public AutoChooser() {
 		
         addDefault("Default Auto", new DriveToDistance(0.5, 0.0, 0.5));
-        addObject("Drive To Distance", new DriveToDistance(0.5, 0.0, 180.0));
+        addObject("Drive To Distance Positive", new DriveToDistance(0.5, 0.0, 180.0));
+        addObject("Drive To Distance Negative", new DriveToDistance(-0.5, 0.0, 180.0));
         addObject("Drive To Ultrasound", new DriveToUltraDistance(0.5, 0.0, 50));
         addObject("Drive To Proximity", new DriveToLimit(0.5, 0.0));
         addObject("Test Auto", new TestAutoCommandGroup());

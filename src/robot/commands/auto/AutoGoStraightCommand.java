@@ -19,8 +19,10 @@ public abstract class AutoGoStraightCommand extends Command {
 	private final double angleSetpoint;
 	private final double speedSetpoint;
 
+	private Direction direction;
+
 	public enum Direction {
-		FORWARD, BACKWARDS;
+		FORWARD, BACKWARD;
 	}
 
 	/*
@@ -56,6 +58,8 @@ public abstract class AutoGoStraightCommand extends Command {
 		autoGyroPID.reset();
 		pidAngleSetpoint = angleSetpoint;
 		autoGyroPID.enable();
+
+		direction = (speedSetpoint < 0) ? Direction.BACKWARD : Direction.FORWARD;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -96,10 +100,7 @@ public abstract class AutoGoStraightCommand extends Command {
 	}
 
 	public Direction getDirection() {
-		if (speedSetpoint < 0) {
-			return Direction.BACKWARDS;
-		} else
-			return Direction.FORWARD;
+		return direction;
 	}
 
 	// Called once after isFinished returns true
