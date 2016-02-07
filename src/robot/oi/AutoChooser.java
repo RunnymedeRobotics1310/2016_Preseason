@@ -7,6 +7,7 @@ import robot.commands.auto.DriveToDistance;
 import robot.commands.auto.DriveToLimit;
 import robot.commands.auto.DriveToUltraDistance;
 import robot.commands.auto.TestAutoCommandGroup;
+import robot.oi.OI.Slot;
 
 public class AutoChooser {
 
@@ -58,5 +59,26 @@ public class AutoChooser {
 	
 	public Command getSelectedCommand() {
 		return (Command) oldChooser.getSelected();
+	}
+	
+	public Integer getSelectedSlot() {
+		
+		Integer selectedValue = (Integer) slotChooser.getSelected();
+		return selectedValue;
+	}
+	
+	public String getSelectedDefence() {
+		String selectedDefence = (String) defenceChooser.getSelected();
+		return selectedDefence;
+	}
+	
+	public String getSelectedDistance() {
+		String selectedDistance = (String) distanceChooser.getSelected();
+		return selectedDistance;
+	}
+	
+	public String getSelectedGoal() {
+		String selectedGoal = (String) goalChooser.getSelected();
+		return selectedGoal;
 	}
 }
