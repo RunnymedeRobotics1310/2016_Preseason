@@ -12,6 +12,9 @@ public class AutoChooser {
 
 	SendableChooser oldChooser = new SendableChooser();
 	SendableChooser slotChooser = new SendableChooser();
+	SendableChooser defenceChooser = new SendableChooser();
+	SendableChooser distanceChooser = new SendableChooser();
+	SendableChooser goalChooser = new SendableChooser();
 	
 	public AutoChooser() {
 		
@@ -28,10 +31,28 @@ public class AutoChooser {
         slotChooser.addObject("4",new Integer(4));
         slotChooser.addObject("5",new Integer(5));
         
+        defenceChooser.addObject("Low Bar", new String("Low Bar"));
+        defenceChooser.addObject("Ramparts", new String("Ramparts"));
+        defenceChooser.addObject("Moat", new String("Moat"));
+        defenceChooser.addObject("Rock Wall", new String("Rock Wall"));
+        defenceChooser.addObject("Rough Terain", new String("Rough Terain"));
+        defenceChooser.addObject("Portcullis", new String("Portcullis"));
+        defenceChooser.addObject("Cheval de Frise", new String("Cheval de Frise"));
+        
+        distanceChooser.addObject("Close", new String("Close"));
+        distanceChooser.addObject("Far", new String("Far"));
+        
+        goalChooser.addObject("Left", new String("Left"));
+        goalChooser.addObject("Center", new String("Center"));
+        goalChooser.addObject("Right", new String("Right"));
         
         
         SmartDashboard.putData("Auto mode", oldChooser);
         SmartDashboard.putData("Slot position", slotChooser);
+        SmartDashboard.putData("Defences",defenceChooser);
+        SmartDashboard.putData("Distance",distanceChooser);
+        SmartDashboard.putData("Goal",goalChooser);
+        
         
 	}
 	
