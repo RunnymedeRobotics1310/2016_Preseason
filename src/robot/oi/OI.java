@@ -14,7 +14,6 @@ import robot.R_GameControllerFactory;
 public class OI {
 
 	
-	value = getSelectedSlot();
 	R_GameController driverStick = R_GameControllerFactory.getGameController(0);
 	
 	public double getSpeed() {

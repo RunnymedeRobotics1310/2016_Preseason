@@ -7,7 +7,6 @@ import robot.commands.auto.DriveToDistance;
 import robot.commands.auto.DriveToLimit;
 import robot.commands.auto.DriveToUltraDistance;
 import robot.commands.auto.TestAutoCommandGroup;
-import robot.oi.OI.Slot;
 
 public class AutoChooser {
 
@@ -54,11 +53,6 @@ public class AutoChooser {
         SmartDashboard.putData("Distance",distanceChooser);
         SmartDashboard.putData("Goal",goalChooser);
         
-<<<<<<< HEAD
-        
-=======
-        SmartDashboard.putData("Auto mode", this);
->>>>>>> refs/remotes/origin/master
 	}
 	
 	public Command getSelectedCommand() {
