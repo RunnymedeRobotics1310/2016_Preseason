@@ -4,7 +4,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class R_GameControllerFactory {
+	
 	public static R_GameController getGameController(int port) {
+		
 		Joystick newStick = new Joystick(port);
 		SmartDashboard.putString("", newStick.getName());
 
@@ -23,7 +25,7 @@ public class R_GameControllerFactory {
 		// 360's, including the Xbox One Controller, so by default assume that
 		// every gamepad/joystick is an Xbox gamepad
 		default:
-			return new R_Xbox_GameController(newStick);
-		}
+			return new R_F310_GameController(newStick);		}
 	}
+	
 }
