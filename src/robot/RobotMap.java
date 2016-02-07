@@ -35,7 +35,8 @@ public class RobotMap {
     	ULTRASONIC   (3),
     	
     	// Digital Ports
-    	LEFT_LIMIT_SWITCH(8),
+    	LEFT_LIMIT_SWITCH(7),
+    	CENTER_LIMIT_SWITCH(8),
     	RIGHT_LIMIT_SWITCH(9);
     	
         public final int port;

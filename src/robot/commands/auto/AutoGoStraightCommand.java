@@ -18,11 +18,18 @@ public abstract class AutoGoStraightCommand extends Command {
 
 	private final double angleSetpoint;
 	private final double speedSetpoint;
-	
+
+	private Direction direction;
+
+	public enum Direction {
+		FORWARD, BACKWARD;
+	}
+
 	/*
 	 * Angle PID Controller
 	 * 
-	 * These controllers are declared as static so that they can be adjusted in the console
+	 * These controllers are declared as static so that they can be adjusted in
+	 * the console
 	 */
 	private static R_PIDInput gyroPIDInput = new R_PIDInput() {
 		@Override
@@ -51,6 +58,8 @@ public abstract class AutoGoStraightCommand extends Command {
 		autoGyroPID.reset();
 		pidAngleSetpoint = angleSetpoint;
 		autoGyroPID.enable();
+
+		direction = (speedSetpoint < 0) ? Direction.BACKWARD : Direction.FORWARD;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -75,10 +84,10 @@ public abstract class AutoGoStraightCommand extends Command {
 			leftSpeed = turn * 0.25;
 			rightSpeed = -turn * 0.25;
 		} else {
-			leftSpeed  = (turn < 0) ? speed * (1 + turn) : speed;
-			rightSpeed = (turn < 0) ? speed              : speed * (1 - turn);
+			leftSpeed = (turn < 0) ? speed * (1 + turn) : speed;
+			rightSpeed = (turn < 0) ? speed : speed * (1 - turn);
 		}
-		
+
 		Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
 
 		SmartDashboard.putData("Gyro PID", autoGyroPID);
@@ -90,10 +99,14 @@ public abstract class AutoGoStraightCommand extends Command {
 		return false;
 	}
 
+	public Direction getDirection() {
+		return direction;
+	}
+
 	// Called once after isFinished returns true
 	public void end() {
 		autoGyroPID.disable();
-	    Robot.chassisSubsystem.setSpeed(0, 0);
+		Robot.chassisSubsystem.setSpeed(0, 0);
 	}
 
 	// Called when another command which requires one or more of the same

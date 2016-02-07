@@ -2,15 +2,15 @@ package robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class R_Xbox360_GameController extends R_GameController {
+public class R_Xbox_GameController extends R_GameController {
 
 	private final Joystick joystick;
 
-	public R_Xbox360_GameController(int port) {
+	public R_Xbox_GameController(int port) {
 		joystick = new Joystick(port);
 	}
 
-	public R_Xbox360_GameController(Joystick j) {
+	public R_Xbox_GameController(Joystick j) {
 		joystick = j;
 	}
 
@@ -70,8 +70,8 @@ public class R_Xbox360_GameController extends R_GameController {
 		double triggerValue = 0.0;
 
 		switch (trigger) {
-		case LEFT:  triggerValue = joystick.getRawAxis(2); break;
-		case RIGHT: triggerValue = joystick.getRawAxis(3); break;
+		case LEFT:  triggerValue = joystick.getRawAxis(11); break;
+		case RIGHT: triggerValue = joystick.getRawAxis(12); break;
 		}
 
 		// Round the trigger value to 2 decimal places

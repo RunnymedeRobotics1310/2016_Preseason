@@ -5,16 +5,16 @@ import robot.R_GameController;
 import robot.R_GameController.Axis;
 import robot.R_GameController.Button;
 import robot.R_GameController.Stick;
-import robot.R_Xbox360_GameController;
+import robot.R_GameControllerFactory;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+
 	
-	// R_GameController driverStick = new R_F310_GameController(0);
-	R_GameController driverStick = new R_Xbox360_GameController(0);
+	R_GameController driverStick = R_GameControllerFactory.getGameController(0);
 	
 	public double getSpeed() {
 		double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);

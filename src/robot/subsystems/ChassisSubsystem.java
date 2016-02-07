@@ -24,6 +24,7 @@ public class ChassisSubsystem extends R_Subsystem {
 	Talon leftMotor = new R_Talon(RobotMap.MotorMap.LEFT_MOTOR);
 	Talon rightMotor = new R_Talon(RobotMap.MotorMap.RIGHT_MOTOR);
 	DigitalInput leftLimitSwitch = new DigitalInput(RobotMap.SensorMap.LEFT_LIMIT_SWITCH.port);
+	DigitalInput centerLimitSwitch = new DigitalInput(RobotMap.SensorMap.CENTER_LIMIT_SWITCH.port);
 	DigitalInput rightLimitSwitch = new DigitalInput(RobotMap.SensorMap.RIGHT_LIMIT_SWITCH.port);
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
@@ -92,13 +93,13 @@ public class ChassisSubsystem extends R_Subsystem {
 	}
 
 	public boolean getFrontLimit() {
-	    boolean frontLimit = !rightLimitSwitch.get() || !leftLimitSwitch.get();
+	    boolean frontLimit = !rightLimitSwitch.get() || !leftLimitSwitch.get() || !centerLimitSwitch.get();
 	    SmartDashboard.putBoolean("Front Limit", frontLimit);
 	    return frontLimit;
 	}
 
 	public double getUltraSonicDistance() {
-		return this.ultrasonic.getDistance();
+		return this.ultrasonic.getRawDistance();
 	}
 
 	@Override
@@ -143,7 +144,7 @@ public class ChassisSubsystem extends R_Subsystem {
 		SmartDashboard.putData("Right Motor PID", rightMotorPID);
 		SmartDashboard.putData("Gyro", gyro);
 		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
-		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonic.getDistance());
+		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonic.getRawDistance());
 		SmartDashboard.putNumber("Raw ultrasonic sensor voltage", ultrasonic.getVoltage());
 	}
 }

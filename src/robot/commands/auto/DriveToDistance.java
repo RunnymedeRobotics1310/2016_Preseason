@@ -44,6 +44,8 @@ public class DriveToDistance extends AutoGoStraightCommand {
 
 	// Called once after isFinished returns true
 	protected boolean isFinished() {
-		return (distanceSetpoint <= Robot.chassisSubsystem.getEncoderDistance());
+		System.out.println("Distance:" + distanceSetpoint);
+		System.out.println("Encoder Distance: " + Robot.chassisSubsystem.getEncoderDistance());
+		return (Math.abs(Robot.chassisSubsystem.getEncoderDistance()) >= distanceSetpoint);
 	}
 }
