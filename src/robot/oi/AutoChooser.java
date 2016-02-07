@@ -54,7 +54,11 @@ public class AutoChooser {
         SmartDashboard.putData("Distance",distanceChooser);
         SmartDashboard.putData("Goal",goalChooser);
         
+<<<<<<< HEAD
         
+=======
+        SmartDashboard.putData("Auto mode", this);
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	public Command getSelectedCommand() {
