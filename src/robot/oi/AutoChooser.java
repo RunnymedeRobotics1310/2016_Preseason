@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.commands.auto.DriveToDistance;
 import robot.commands.auto.DriveToLimit;
 import robot.commands.auto.DriveToUltraDistance;
-import robot.commands.auto.SuperFastAuto;
 import robot.commands.auto.TestAutoCommandGroup;
 
 public class AutoChooser extends SendableChooser {
