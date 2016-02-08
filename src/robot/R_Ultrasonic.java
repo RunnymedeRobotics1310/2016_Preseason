@@ -3,7 +3,7 @@ package robot;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class R_Ultrasonic extends AnalogInput {
-	R_LowPassFilter lowPass = new R_LowPassFilter(10, 0.02);
+	R_LowPassFilter lowPass = new R_LowPassFilter(10, 0.02, 10);
 	
 	public R_Ultrasonic(int port) {
 		super(port);
