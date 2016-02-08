@@ -1,13 +1,7 @@
 package robot.commands;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import robot.R_PIDController;
-import robot.R_PIDInput;
 import robot.Robot;
 
 /**
@@ -17,28 +11,6 @@ public class GoStraightCommand extends Command {
 
 	double angleSetpoint;
 
-	double pidOutputTurn;
-	/*
-	 * Motor PID Controllers
-	 */
-	R_PIDInput gyroPIDInput = new R_PIDInput() {
-		@Override
-		public double pidGet() {
-			return -Robot.chassisSubsystem.getAngleDifference(angleSetpoint) / 180.0;
-		}
-	};
-
-	PIDOutput gyroPIDOutput = new PIDOutput() {
-		@Override
-		public void pidWrite(double output) {
-			pidOutputTurn = output;
-		}
-	};
-
-	R_PIDController gyroPID = new R_PIDController(30.0, 3.0, 0.0, 1.0, gyroPIDInput, gyroPIDOutput);
-
-	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
-
 	public GoStraightCommand(double angle) {
 		requires(Robot.chassisSubsystem);
 		this.angleSetpoint = angle;
@@ -46,8 +18,9 @@ public class GoStraightCommand extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		gyroPID.reset();
-		gyroPID.enable();
+		GoStraightPID.setEnabled(false);
+		GoStraightPID.setSetpoint(angleSetpoint);
+		GoStraightPID.setEnabled(true);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -57,29 +30,29 @@ public class GoStraightCommand extends Command {
 		double leftSpeed;
 		double rightSpeed;
 
-		gyroPID.calculate();
-
 		SmartDashboard.putNumber("Angle setpoint", angleSetpoint);
 		SmartDashboard.putNumber("Angle difference", -Robot.chassisSubsystem.getAngleDifference(angleSetpoint));
-		SmartDashboard.putNumber("GyroPIDOutput", pidOutputTurn);
+		SmartDashboard.putNumber("AnglePIDOutput", GoStraightPID.getOutput());
 
-		double turn = pidOutputTurn;
+		double turn = GoStraightPID.getOutput();
 
-		if (speed < 0) {
-			turn = -turn;
-		}
+		// Reverse the direction of the turn when going backwards
+		if (speed < 0) { turn = -turn; }
 
+		// If the speed is zero, then just pivot in place
+		// The speed of the turn is set to 1/4 of the full value for all pivots.
 		if (Math.abs(speed) < 0.03) {
-			leftSpeed = turn * 0.25;
+			leftSpeed  =  turn * 0.25;
 			rightSpeed = -turn * 0.25;
 		} else {
-			leftSpeed = (turn < 0) ? speed * (1 + turn) : speed;
-			rightSpeed = (turn > 0) ? speed * (1 - turn) : speed;
+			
+			// If the speed is more than zero, then slow down one side of the robot
+			leftSpeed  = (turn < 0) ? speed * (1 + turn) : speed;
+			rightSpeed = (turn < 0) ? speed              : speed * (1 - turn);
 		}
 
 		Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
 
-		SmartDashboard.putData("Gyro PID", gyroPID);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -94,8 +67,7 @@ public class GoStraightCommand extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		gyroPID.disable();
-		SmartDashboard.putData("Gyro PID", gyroPID);
+		GoStraightPID.setEnabled(false);
 	}
 
 	// Called when another command which requires one or more of the same
