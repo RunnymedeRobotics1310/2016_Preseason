@@ -99,7 +99,7 @@ public class ChassisSubsystem extends R_Subsystem {
 	}
 
 	public double getUltraSonicDistance() {
-		return this.ultrasonic.getRawDistance();
+		return this.ultrasonic.getDistance();
 	}
 
 	@Override
@@ -128,15 +128,20 @@ public class ChassisSubsystem extends R_Subsystem {
 		this.rightEncoder.reset();
 	}
 	
+	public void resetUltrasonic(){
+	    ultrasonic.reset();
+	}
+	
 	public void resetGyro() {
 		gyro.reset();
 	}
-
+	
 	@Override
 	public void updateDashboard() {
 		SmartDashboard.putData("Left Motor", leftMotor);
 		SmartDashboard.putData("Right Motor", rightMotor);
 		SmartDashboard.putData("Left Limit Switch", leftLimitSwitch);
+		SmartDashboard.putData("Center Limit Switch", centerLimitSwitch);
 		SmartDashboard.putData("Right Limit Switch", rightLimitSwitch);
 		SmartDashboard.putData("Left Encoder", leftEncoder);
 		SmartDashboard.putData("Right Encoder", rightEncoder);
