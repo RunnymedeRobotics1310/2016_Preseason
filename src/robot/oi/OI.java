@@ -45,6 +45,14 @@ public class OI {
 		return Slot.toEnum(autoChooser.getSelectedSlot());
 	}
 	
+	public Distance getDistance() {
+		return Distance.toEnum(autoChooser.getSelectedDistance());
+	}
+	
+	public Goal getGoal() {
+		return Goal.toEnum(autoChooser.getSelectedGoal());
+	}
+	
 	public Command getAutoCommand() {
 		return (Command) autoChooser.oldChooser.getSelected();
 	}
