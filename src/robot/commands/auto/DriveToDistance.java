@@ -7,12 +7,14 @@ import robot.Robot;
  */
 public class DriveToDistance extends AutoGoStraightCommand {
 
-	/**
-	 * The distance to drive to.
-	 */
-	private double distanceSetpoint;
+    /**
+     * The distance to drive to.
+     */
+    private double distanceSetpoint;
 
-	/**
+    private double speedSetpoint;
+
+    /**
 	 * The constructor for a new DriveToDistance command.
 	 * 
 	 * @param speed
@@ -23,29 +25,34 @@ public class DriveToDistance extends AutoGoStraightCommand {
 	 *            The distance to drive to.
 	 */
 	public DriveToDistance(double speed, double angle, double distance) {
-		super(speed, angle);
+		super(angle);
+		this.speedSetpoint = speed;
 		this.distanceSetpoint = distance;
 	}
 
-	// Called just before this Command runs the first time
-	protected void initialize() {
-		Robot.chassisSubsystem.resetEncoders();
-		super.initialize();
-	}
+    // Called just before this Command runs the first time
+    protected void initialize() {
+	Robot.chassisSubsystem.resetEncoders();
+	super.initialize();
 
-	/**
-	 * Gets the distance set point.
-	 * 
-	 * @return the distance set point.
-	 */
-	public double getDistance() {
-		return distanceSetpoint;
+	if (distanceSetpoint < 0) {
+	    setSpeed(speedSetpoint, Direction.BACKWARDS);
+	} else {
+	    setSpeed(speedSetpoint, Direction.FORWARD);
 	}
+    }
 
-	// Called once after isFinished returns true
-	protected boolean isFinished() {
-		System.out.println("Distance:" + distanceSetpoint);
-		System.out.println("Encoder Distance: " + Robot.chassisSubsystem.getEncoderDistance());
-		return (Math.abs(Robot.chassisSubsystem.getEncoderDistance()) >= distanceSetpoint);
-	}
+    /**
+     * Gets the distance set point.
+     * 
+     * @return the distance set point.
+     */
+    public double getDistance() {
+	return distanceSetpoint;
+    }
+
+    // Called once after isFinished returns true
+    protected boolean isFinished() {
+	return (Math.abs(Robot.chassisSubsystem.getEncoderDistance()) >= Math.abs(distanceSetpoint));
+    }
 }

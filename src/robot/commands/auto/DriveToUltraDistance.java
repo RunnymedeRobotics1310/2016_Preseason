@@ -4,41 +4,54 @@ import robot.Robot;
 
 public class DriveToUltraDistance extends AutoGoStraightCommand {
 
-    /**
-     * The distance to drive to.
-     */
-    private double distanceSetpoint;
+	/**
+	 * The distance to drive to.
+	 */
+	private double distanceSetpoint;
 
-    /**
-     * The constructor for a new DriveToDistance command.
-     * 
-     * @param speed
-     *            The speed at which to drive.
-     * @param angle
-     *            The angle to drive at (in degrees).
-     * @param distance
-     *            The distance to drive to.
-     */
-    public DriveToUltraDistance(double speed, double angle, double distance) {
-	super(speed, angle);
-	this.distanceSetpoint = distance;
-    }
+	private double speedSetpoint;
 
-    /**
-     * Gets the distance set point.
-     * 
-     * @return the distance set point.
-     */
-    public double getDistance() {
-	return distanceSetpoint;
-    }
+	/**
+	 * The constructor for a new DriveToDistance command.
+	 * 
+	 * @param speed
+	 *            The speed at which to drive.
+	 * @param angle
+	 *            The angle to drive at (in degrees).
+	 * @param distance
+	 *            The distance to drive to.
+	 */
+	public DriveToUltraDistance(double speed, double angle, double distance) {
+		super(angle);
+		this.speedSetpoint = speed;
+		this.distanceSetpoint = distance;
+	}
 
-    // Called once after isFinished returns true
-    protected boolean isFinished() {
-	// Stop 4in early because it takes the robot 4 inches to stop.
-	if (getDirection() == Direction.FORWARD)
-	    return (distanceSetpoint - 4.0 < Robot.chassisSubsystem.getUltraSonicDistance());
-	else
-	    return (distanceSetpoint + 4.0 > Robot.chassisSubsystem.getUltraSonicDistance());
-    }
+	protected void initialize() {
+		super.initialize();
+		Robot.chassisSubsystem.resetUltrasonic();
+		if (distanceSetpoint - Robot.chassisSubsystem.getUltraSonicDistance() < 0) {
+			setSpeed(-speedSetpoint, Direction.BACKWARDS);
+		} else {
+			setSpeed(speedSetpoint, Direction.FORWARD);
+		}
+		System.out.println("drive to ultra started");
+	}
+
+	/**
+	 * Gets the distance set point.
+	 * 
+	 * @return the distance set point.
+	 */
+	public double getDistanceSetpoint() {
+		return distanceSetpoint;
+	}
+
+	// Called once after isFinished returns true
+	protected boolean isFinished() {
+		// Stop 4in early because it takes the robot 4 inches to stop.
+		System.out.println("Drive ultra finished");
+		return (Math.abs(distanceSetpoint - Robot.chassisSubsystem.getUltraSonicDistance()) <= 4);
+
+	}
 }

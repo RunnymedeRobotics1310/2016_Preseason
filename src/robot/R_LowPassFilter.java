@@ -1,17 +1,20 @@
 package robot;
 
 public class R_LowPassFilter {
-    double cutOff;
-    double sampleTime;
-    double yPrevious = 0;
-    double xPrevious = 0;
+
+	private final double tau;
+	private final double sampleTime;
+    private final double maxIncrement;
     
-    double lastError = -1;
+    private double yPrevious = 0;
+    private double xPrevious = 0;
+    
+    private double lastError = -1;
 
 	/*
-	 * y = [(x + xp) - (1 - {2t/T})yp]/[1 + (2t/T)]
+	 * y = [(x + xp) - (1 - (2tau/T))yp] / [1 + (2tau/T)]
 	 * 
-	 * where t = 1 / f-cutoff
+	 * where tau = 1 / f-cutoff
 	 * T = sample time
 	 */
 
@@ -20,10 +23,14 @@ public class R_LowPassFilter {
      * 
      * @param cutOffFrequency The frequency (in Hz) that should be used for cut off.
      * @param sampleTime The time (in seconds) that your data is sampled.
+     * @param maxIncrement The maximum increment expected in the input in any one sample.  If the 
+     * input step exceeds this maximum, the sample is not used, and the previous input sample is used
+     * instead.  If the sample occurs again, then this new value is used as the new baseline.
      */
-    public R_LowPassFilter(double cutOffFrequency, double sampleTime) {
-        this.cutOff = 1 / cutOffFrequency;
-        this.sampleTime = sampleTime;
+    public R_LowPassFilter(double cutOffFrequency, double sampleTime, double maxIncrement) {
+        this.tau = 1 / cutOffFrequency;
+        this.sampleTime      = sampleTime;
+        this.maxIncrement    = maxIncrement;
     }
 
     public void reset(double initVal) {
@@ -34,12 +41,17 @@ public class R_LowPassFilter {
      * Calculates/adjusts the output given the low pass filter.
      * 
      * @param x The input to pass to the filter
-     * @return The adjusted output
+     * @return The filtered output
      */
     public double calculate(double x) {
-        if (Math.abs(x - xPrevious) < 10 || Math.abs(lastError - x) < 5) {
-            double numerator = (x + xPrevious) - (1 - (2 * cutOff / sampleTime)) * yPrevious;
-            double denominator = 1 + (2 * cutOff / sampleTime);
+    	
+    	// Determine whether to use this sample.
+        if (Math.abs(x - xPrevious) < maxIncrement || Math.abs(lastError - x) < 5) {
+
+       	    // y = [(x + xp) - (1 - (2tau/T))yp] / [1 + (2tau/T)]
+
+        	double numerator = (x + xPrevious) - (1 - (2 * tau / sampleTime)) * yPrevious;
+            double denominator = 1 + (2 * tau / sampleTime);
             double y = numerator / denominator;
 
             xPrevious = x;
