@@ -20,9 +20,9 @@ public class AutoChooser {
 		
         oldChooser.addDefault("Default Auto", new DriveToDistance(0.5, 0.0, 0.5));
         oldChooser.addObject("Drive To Distance Positive", new DriveToDistance(0.5, 0.0, 180.0));
-        oldChooser.addObject("Drive To Distance Negative", new DriveToDistance(-0.5, 0.0, 180.0));
-        oldChooser.addObject("Drive To Ultrasound", new DriveToUltraDistance(0.5, 0.0, 50));
-        oldChooser.addObject("Drive To Proximity", new DriveToLimit(0.5, 0.0));
+        oldChooser.addObject("Drive To Distance Negative", new DriveToDistance(0.5, 0.0, -180.0));
+        oldChooser.addObject("Drive To Ultrasound", new DriveToUltraDistance(0.5, 0.0, 90));
+        oldChooser.addObject("Drive To Limit", new DriveToLimit(0.5, 0.0));
         oldChooser.addObject("Test Auto", new TestAutoCommandGroup());
         
         slotChooser.addObject("1",new Integer(1));
@@ -54,8 +54,9 @@ public class AutoChooser {
         SmartDashboard.putData("Goal",goalChooser);
         
 	}
-	
+
 	public Command getSelectedCommand() {
+	    System.out.println(oldChooser.getSelected());
 		return (Command) oldChooser.getSelected();
 	}
 	
