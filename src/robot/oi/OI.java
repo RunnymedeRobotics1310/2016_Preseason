@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Field.Defence;
 import robot.Field.Slot;
+import robot.Field.Goal;
+import robot.Field.Distance;
 import robot.R_GameController;
 import robot.R_GameController.Axis;
 import robot.R_GameController.Button;

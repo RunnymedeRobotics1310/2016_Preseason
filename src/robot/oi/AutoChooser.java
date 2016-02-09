@@ -35,7 +35,7 @@ public class AutoChooser {
         defenceChooser.addObject("Ramparts", new String("Ramparts"));
         defenceChooser.addObject("Moat", new String("Moat"));
         defenceChooser.addObject("Rock Wall", new String("Rock Wall"));
-        defenceChooser.addObject("Rough Terain", new String("Rough Terain"));
+        defenceChooser.addObject("Rough Terrain", new String("Rough Terrain"));
         defenceChooser.addObject("Portcullis", new String("Portcullis"));
         defenceChooser.addObject("Cheval de Frise", new String("Cheval de Frise"));
         

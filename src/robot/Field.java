@@ -2,6 +2,49 @@ package robot;
 
 public class Field {
 	
+	public enum Goal {
+		LEFT ("Left"),
+		CENTER ("Center"),
+		RIGHT ("Right");
+		
+		private final String stringValue;
+		
+		Goal (String stringValue) {
+			this.stringValue = stringValue;
+		}
+		
+		public static Goal toEnum(String stringValue) {
+			for(Goal goal: Goal.values()) {
+				if(goal.stringValue.equals(stringValue)) {
+					return goal;
+				}
+			}
+			System.out.println("Goal value (" + stringValue + ") is not a valid goal string");
+			return null;
+		}
+	}
+	
+	public enum Distance {
+		CLOSE ("Close"),
+		FAR ("Far");
+		
+		private final String stringValue;
+		
+		Distance(String stringValue) {
+			this.stringValue = stringValue;
+		}
+		
+		public static Distance toEnum(String stringValue) {
+			for(Distance distance: Distance.values()) {
+				if(distance.stringValue.equals(stringValue)) {
+					return distance;
+				}
+			}
+			System.out.println("Distance value (" + stringValue + ") is not a valid goal string");
+			return null;
+		}
+	}
+	
 	public enum Slot { 
 		
 		ONE   (1), 
