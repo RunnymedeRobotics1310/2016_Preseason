@@ -31,7 +31,7 @@ public class GoStraightPID {
 	private static double pidOutputValue = 0.0;
 
 	private static R_PIDController anglePIDController = 
-			new R_PIDController(30.0, 3.0, 0.0, 1.0, anglePIDInput, anglePIDOutput);
+			new R_PIDController(20.0, 2.0, 0.0, 1.0, anglePIDInput, anglePIDOutput);
 	
 	public static void setEnabled(boolean enabled) {
 		if (enabled) {
