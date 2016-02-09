@@ -34,6 +34,7 @@ public abstract class AutoGoStraightCommand extends Command {
 	GoStraightPID.setEnabled(false);
 	GoStraightPID.setSetpoint(angleSetpoint);
 	GoStraightPID.setEnabled(true);
+	System.out.println("Initialize AutoGoStraight");
     }
 
     // Called repeatedly when this Command is scheduled to run

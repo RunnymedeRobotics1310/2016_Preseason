@@ -16,7 +16,7 @@ public class GoStraightPID {
 	private static R_PIDInput anglePIDInput = new R_PIDInput() {
 		@Override
 		public double pidGet() {
-			return -Robot.chassisSubsystem.getAngleDifference(pidSetpoint) / 180.0;
+			return -Robot.chassisSubsystem.getAngleDifference(angleSetpoint) / 180.0;
 		}
 	};
 
@@ -27,7 +27,7 @@ public class GoStraightPID {
 		}
 	};
 	
-	private static double pidSetpoint = 0.0;
+	private static double angleSetpoint = 0.0;
 	private static double pidOutputValue = 0.0;
 
 	private static R_PIDController anglePIDController = 
@@ -50,8 +50,7 @@ public class GoStraightPID {
 	}
 	
 	public static void setSetpoint(double setpoint) {
-		anglePIDController.setSetpoint(setpoint);
-		pidSetpoint = setpoint;
+		angleSetpoint = setpoint;
 	}
 
 	public static void periodic() {
