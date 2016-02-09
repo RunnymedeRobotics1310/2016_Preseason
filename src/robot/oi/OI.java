@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import robot.Field.Defence;
 import robot.Field.Slot;
+import robot.Field.Goal;
+import robot.Field.Distance;
 import robot.R_GameController;
 import robot.R_GameController.Axis;
 import robot.R_GameController.Button;
@@ -43,6 +45,14 @@ public class OI {
 	
 	public Slot getSlot() {
 		return Slot.toEnum(autoChooser.getSelectedSlot());
+	}
+	
+	public Distance getDistance() {
+		return Distance.toEnum(autoChooser.getSelectedDistance());
+	}
+	
+	public Goal getGoal() {
+		return Goal.toEnum(autoChooser.getSelectedGoal());
 	}
 	
 	public Command getAutoCommand() {
