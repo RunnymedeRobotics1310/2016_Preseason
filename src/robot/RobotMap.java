@@ -10,7 +10,10 @@ public class RobotMap {
 
     public enum MotorMap {
         LEFT_MOTOR (1, !RobotMap.inverted),
-        RIGHT_MOTOR(0, RobotMap.inverted);
+        RIGHT_MOTOR(0, RobotMap.inverted),
+        INTAKE_MOTOR(2, !RobotMap.inverted),
+        LEFT_SHOOTER_MOTOR(3, !RobotMap.inverted),
+        RIGHT_SHOOTER_MOTOR(4, !RobotMap.inverted);
 
         public final int port;
         public final boolean inverted;
@@ -35,6 +38,7 @@ public class RobotMap {
     	ULTRASONIC   (3),
     	
     	// Digital Ports
+    	SHOOTER_LIMIT_SWITCH(6),
     	LEFT_LIMIT_SWITCH(7),
     	CENTER_LIMIT_SWITCH(8),
     	RIGHT_LIMIT_SWITCH(9);
@@ -48,7 +52,11 @@ public class RobotMap {
     
     public enum EncoderMap {
     	LEFT (2, 3, 1800.0, 29.75),
-    	RIGHT(0, 1, 1800.0, 29.75);
+    	RIGHT(0, 1, 1800.0, 29.75),
+    	
+    	//Counts per inch not accurate
+    	LEFT_SHOOTER(4,5,1800.0,29.75),
+    	RIGHT_SHOOTER(6,7,1800.0,29.75);
     	
     	public final int ch1;
     	public final int ch2;
