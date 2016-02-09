@@ -9,6 +9,8 @@ public class DriveToUltraDistance extends AutoGoStraightCommand {
      */
     private double distanceSetpoint;
 
+    private double speedSetpoint;
+
     /**
      * The constructor for a new DriveToDistance command.
      * 
@@ -20,8 +22,19 @@ public class DriveToUltraDistance extends AutoGoStraightCommand {
      *            The distance to drive to.
      */
     public DriveToUltraDistance(double speed, double angle, double distance) {
-	super(speed, angle);
+	super(angle);
+	this.speedSetpoint = speed;
 	this.distanceSetpoint = distance;
+    }
+
+    protected void initialize() {
+	super.initialize();
+	Robot.chassisSubsystem.resetUltrasonic();
+	if (distanceSetpoint - Robot.chassisSubsystem.getUltraSonicDistance() < 0) {
+	    setSpeed(-speedSetpoint, Direction.BACKWARDS);
+	} else {
+	    setSpeed(speedSetpoint, Direction.FORWARD);
+	}
     }
 
     /**
@@ -29,16 +42,13 @@ public class DriveToUltraDistance extends AutoGoStraightCommand {
      * 
      * @return the distance set point.
      */
-    public double getDistance() {
+    public double getDistanceSetpoint() {
 	return distanceSetpoint;
     }
 
     // Called once after isFinished returns true
     protected boolean isFinished() {
 	// Stop 4in early because it takes the robot 4 inches to stop.
-	if (getDirection() == Direction.FORWARD)
-	    return (distanceSetpoint - 4.0 < Robot.chassisSubsystem.getUltraSonicDistance());
-	else
-	    return (distanceSetpoint + 4.0 > Robot.chassisSubsystem.getUltraSonicDistance());
+	return (Math.abs(distanceSetpoint - Robot.chassisSubsystem.getUltraSonicDistance()) <= 4);
     }
 }
