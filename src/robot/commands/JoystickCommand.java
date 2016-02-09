@@ -30,6 +30,10 @@ public class JoystickCommand extends Command {
     		Robot.chassisSubsystem.resetGyro();
     	}
     	
+    	if (Robot.oi.getGyroCalibrate()) {
+    		Robot.chassisSubsystem.calibrateGyro();
+    	}
+    	
     	if (Robot.oi.getPOVAngle() != -1) {
     		Scheduler.getInstance().add(new RotateToAngle(Robot.oi.getPOVAngle(), 3.0));
     		return;

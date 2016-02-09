@@ -29,6 +29,8 @@ public class ChassisSubsystem extends R_Subsystem {
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
 	R_Ultrasonic ultrasonic = new R_Ultrasonic(RobotMap.SensorMap.ULTRASONIC.port);
+	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
+
 
 	/*
 	 * Motor PID Controllers
@@ -52,9 +54,6 @@ public class ChassisSubsystem extends R_Subsystem {
 	R_PIDController rightMotorPID = new R_PIDController(1.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor);
 
 	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
-
-	// Gyro
-	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
 
 	public void init() {
 		pidControllers.add(leftMotorPID);
@@ -135,6 +134,10 @@ public class ChassisSubsystem extends R_Subsystem {
 	public void resetGyro() {
 		gyro.reset();
 	}
+
+	public void calibrateGyro() {
+		gyro.calibrate();
+	}
 	
 	@Override
 	public void updateDashboard() {
@@ -149,6 +152,8 @@ public class ChassisSubsystem extends R_Subsystem {
 		SmartDashboard.putData("Right Motor PID", rightMotorPID);
 		SmartDashboard.putData("Gyro", gyro);
 		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
+		SmartDashboard.putNumber("Gyro Center", gyro.getCenter());
+		SmartDashboard.putNumber("Gyro Offset", gyro.getOffset());
 		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonic.getRawDistance());
 		SmartDashboard.putNumber("Raw ultrasonic sensor voltage", ultrasonic.getVoltage());
 	}

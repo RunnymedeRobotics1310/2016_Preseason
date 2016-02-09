@@ -37,6 +37,10 @@ public class OI {
 		return driverStick.getButton(Button.BACK);
 	}
 	
+	public boolean getGyroCalibrate() {
+		return driverStick.getButton(Button.START);
+	}
+	
 	public Defence getDefense() {
 		return Defence.toEnum(autoChooser.getSelectedDefence());
 	}
