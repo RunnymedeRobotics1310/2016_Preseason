@@ -32,6 +32,7 @@ public class RotateToAngle extends Command {
 		rightSpeed = -leftSpeed;
 
 		Robot.chassisSubsystem.setSpeed(leftSpeed, rightSpeed);
+		System.out.println("Wait finished");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -61,6 +62,7 @@ public class RotateToAngle extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
+	    System.out.println("rotate finished");
 		if (Math.abs(Robot.oi.getSpeed()) > 0.05 || Math.abs(Robot.oi.getTurn()) > 0.05) {
 			return true;
 		} else if (Robot.oi.getPOVAngle() != -1) {
