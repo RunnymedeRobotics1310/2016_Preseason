@@ -9,7 +9,7 @@ import robot.commands.GoStraightPID;
 public abstract class AutoGoStraightCommand extends Command {
 
 	public enum Direction {
-		FORWARD, BACKWARDS;
+		FORWARD, BACKWARD;
 	}
 
 	private double angleSetpoint;
@@ -22,7 +22,7 @@ public abstract class AutoGoStraightCommand extends Command {
 
 	public void setSpeed(double speed, Direction direction) {
 		double absoluteSpeed = Math.abs(speed);
-		this.speedSetpoint = (direction == Direction.BACKWARDS) ? -absoluteSpeed : absoluteSpeed;
+		this.speedSetpoint = (direction == Direction.FORWARD) ? absoluteSpeed : -absoluteSpeed;
 	}
 
 	// Called just before this Command runs the first time
@@ -30,7 +30,6 @@ public abstract class AutoGoStraightCommand extends Command {
 		GoStraightPID.setEnabled(false);
 		GoStraightPID.setSetpoint(angleSetpoint);
 		GoStraightPID.setEnabled(true);
-		System.out.println("Initialize AutoGoStraight");
 	}
 
 	// Called repeatedly when this Command is scheduled to run

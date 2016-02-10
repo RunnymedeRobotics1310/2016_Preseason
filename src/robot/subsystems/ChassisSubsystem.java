@@ -1,7 +1,6 @@
 package robot.subsystems;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -20,12 +19,12 @@ public class ChassisSubsystem extends R_Subsystem {
 
 	Talon leftMotor = new R_Talon(RobotMap.MotorMap.LEFT_MOTOR);
 	Talon rightMotor = new R_Talon(RobotMap.MotorMap.RIGHT_MOTOR);
-	DigitalInput leftLimitSwitch = new DigitalInput(RobotMap.SensorMap.LEFT_LIMIT_SWITCH.port);
-	DigitalInput centerLimitSwitch = new DigitalInput(RobotMap.SensorMap.CENTER_LIMIT_SWITCH.port);
-	DigitalInput rightLimitSwitch = new DigitalInput(RobotMap.SensorMap.RIGHT_LIMIT_SWITCH.port);
+	DigitalInput leftProximitySensor = new DigitalInput(RobotMap.SensorMap.LEFT_LIMIT_SWITCH.port);
+	DigitalInput centerProximitySensor = new DigitalInput(RobotMap.SensorMap.CENTER_LIMIT_SWITCH.port);
+	DigitalInput rightProximitySensor = new DigitalInput(RobotMap.SensorMap.RIGHT_LIMIT_SWITCH.port);
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
-	R_Ultrasonic ultrasonic = new R_Ultrasonic(RobotMap.SensorMap.ULTRASONIC.port);
+	R_Ultrasonic ultrasonicSensor = new R_Ultrasonic(RobotMap.SensorMap.ULTRASONIC.port);
 
 	/*
 	 * Motor PID Controllers
@@ -48,7 +47,7 @@ public class ChassisSubsystem extends R_Subsystem {
 
 	R_PIDController rightMotorPID = new R_PIDController(1.5, 0.0, 0.0, 1.0, rightPIDInput, rightMotor);
 
-	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
+	ArrayList<R_PIDController> pidControllers = new ArrayList<>();
 
 	// Gyro
 	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
@@ -89,14 +88,14 @@ public class ChassisSubsystem extends R_Subsystem {
 		return gyro.getAngleDifference(targetAngle);
 	}
 
-	public boolean getFrontLimit() {
-		boolean frontLimit = !leftLimitSwitch.get() || !centerLimitSwitch.get() || !rightLimitSwitch.get();
-		SmartDashboard.putBoolean("Front Limit", frontLimit);
-		return frontLimit;
+	public boolean getProximity() {
+		boolean proximity = !leftProximitySensor.get() || !centerProximitySensor.get() || !rightProximitySensor.get();
+		SmartDashboard.putBoolean("Front Limit", proximity);
+		return proximity;
 	}
 
-	public double getUltraSonicDistance() {
-		return this.ultrasonic.getDistance();
+	public double getUltrasonicDistance() {
+		return this.ultrasonicSensor.getDistance();
 	}
 
 	@Override
@@ -119,18 +118,18 @@ public class ChassisSubsystem extends R_Subsystem {
 	}
 
 	/**
-	 * Resets the encoders.
+	 * Resets the encoder distance.
 	 */
 	public void resetEncoders() {
 		this.leftEncoder.reset();
 		this.rightEncoder.reset();
 	}
 
-	public void resetUltrasonic() {
-		ultrasonic.reset();
+	public void resetUltrasonicSensorFilter() {
+		ultrasonicSensor.reset();
 	}
 
-	public void resetGyro() {
+	public void resetGyroHeading() {
 		gyro.reset();
 	}
 
@@ -138,16 +137,16 @@ public class ChassisSubsystem extends R_Subsystem {
 	public void updateDashboard() {
 		SmartDashboard.putData("Left Motor", leftMotor);
 		SmartDashboard.putData("Right Motor", rightMotor);
-		SmartDashboard.putData("Left Limit Switch", leftLimitSwitch);
-		SmartDashboard.putData("Center Limit Switch", centerLimitSwitch);
-		SmartDashboard.putData("Right Limit Switch", rightLimitSwitch);
+		SmartDashboard.putData("Left Limit Switch", leftProximitySensor);
+		SmartDashboard.putData("Center Limit Switch", centerProximitySensor);
+		SmartDashboard.putData("Right Limit Switch", rightProximitySensor);
 		SmartDashboard.putData("Left Encoder", leftEncoder);
 		SmartDashboard.putData("Right Encoder", rightEncoder);
 		SmartDashboard.putData("Left Motor PID", leftMotorPID);
 		SmartDashboard.putData("Right Motor PID", rightMotorPID);
 		SmartDashboard.putData("Gyro", gyro);
 		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
-		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonic.getRawDistance());
-		SmartDashboard.putNumber("Raw ultrasonic sensor voltage", ultrasonic.getVoltage());
+		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonicSensor.getDistance());
+		SmartDashboard.putNumber("Raw ultrasonic sensor voltage", ultrasonicSensor.getVoltage());
 	}
 }
