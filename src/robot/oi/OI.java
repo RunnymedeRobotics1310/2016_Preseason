@@ -17,10 +17,10 @@ import robot.R_GameControllerFactory;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	
+
 	private R_GameController driverStick = R_GameControllerFactory.getGameController(0);
 	private AutoChooser autoChooser = new AutoChooser();
-	
+
 	public double getSpeed() {
 		double joystickValue = driverStick.getAxis(Stick.LEFT, Axis.Y);
 		return -Math.round(joystickValue * Math.abs(joystickValue) * 100) / 100.0;
@@ -31,32 +31,55 @@ public class OI {
 		return Math.round(joystickValue * Math.abs(joystickValue) * 100) / 100.0;
 	}
 
+	/**
+	 * Sets the joystick rumble strength.
+	 * 
+	 * @param strength
+	 *            Has to be between 0.0 and 1.0.
+	 */
+	public void setRumble(double strength) {
+		driverStick.setRumble(strength);
+	}
+
+	/**
+	 * Sets the joystick rumble strength on the left and right channels
+	 * individually.
+	 * 
+	 * @param leftRumble
+	 *            Rumble strength on the left channel.
+	 * @param rightRumble
+	 *            Rumble strength on the right channel.
+	 */
+	public void setRumble(double leftRumble, double rightRumble) {
+		driverStick.setRumble(leftRumble, rightRumble);
+	}
+
 	public int getPOVAngle() {
 		return driverStick.getPOVAngle();
 	}
-	
+
 	public boolean getGyroReset() {
 		return driverStick.getButton(Button.BACK);
 	}
-	
+
 	public Defence getDefense() {
 		return Defence.toEnum(autoChooser.getSelectedDefence());
 	}
-	
+
 	public Slot getSlot() {
 		return Slot.toEnum(autoChooser.getSelectedSlot());
 	}
-	
+
 	public Distance getDistance() {
 		return Distance.toEnum(autoChooser.getSelectedDistance());
 	}
-	
+
 	public Goal getGoal() {
 		return Goal.toEnum(autoChooser.getSelectedGoal());
 	}
-	
+
 	public Command getAutoCommand() {
-		return (Command) autoChooser.oldChooser.getSelected();
+		return (Command) autoChooser.autoModeChooser.getSelected();
 	}
 
 	/**
@@ -64,8 +87,9 @@ public class OI {
 	 * <p>
 	 * i.e. all toggle buttons
 	 */
-	public void periodic() {}
-	
+	public void periodic() {
+	}
+
 	/**
 	 * Put any items on the dashboard
 	 */

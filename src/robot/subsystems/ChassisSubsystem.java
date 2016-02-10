@@ -16,9 +16,6 @@ import robot.R_Ultrasonic;
 import robot.RobotMap;
 import robot.commands.JoystickCommand;
 
-/**
- *
- */
 public class ChassisSubsystem extends R_Subsystem {
 
 	Talon leftMotor = new R_Talon(RobotMap.MotorMap.LEFT_MOTOR);
@@ -93,9 +90,9 @@ public class ChassisSubsystem extends R_Subsystem {
 	}
 
 	public boolean getFrontLimit() {
-	    boolean frontLimit = !rightLimitSwitch.get() || !leftLimitSwitch.get() || !centerLimitSwitch.get();
-	    SmartDashboard.putBoolean("Front Limit", frontLimit);
-	    return frontLimit;
+		boolean frontLimit = !leftLimitSwitch.get() || !centerLimitSwitch.get() || !rightLimitSwitch.get();
+		SmartDashboard.putBoolean("Front Limit", frontLimit);
+		return frontLimit;
 	}
 
 	public double getUltraSonicDistance() {
@@ -117,7 +114,8 @@ public class ChassisSubsystem extends R_Subsystem {
 	 * @return the approximate distance.
 	 */
 	public double getEncoderDistance() {
-		return (this.leftEncoder.getDistance() - this.rightEncoder.getDistance()) / 2.0 / RobotMap.EncoderMap.LEFT.countsPerInch;
+		return (this.leftEncoder.getDistance() - this.rightEncoder.getDistance()) / 2.0
+				/ RobotMap.EncoderMap.LEFT.countsPerInch;
 	}
 
 	/**
@@ -127,15 +125,15 @@ public class ChassisSubsystem extends R_Subsystem {
 		this.leftEncoder.reset();
 		this.rightEncoder.reset();
 	}
-	
-	public void resetUltrasonic(){
-	    ultrasonic.reset();
+
+	public void resetUltrasonic() {
+		ultrasonic.reset();
 	}
-	
+
 	public void resetGyro() {
 		gyro.reset();
 	}
-	
+
 	@Override
 	public void updateDashboard() {
 		SmartDashboard.putData("Left Motor", leftMotor);
