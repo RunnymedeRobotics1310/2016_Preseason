@@ -1,7 +1,7 @@
 package robot;
 
 public class Toggle {
-	
+
 	boolean state, previousState;
 	long time = System.nanoTime();
 
@@ -14,16 +14,16 @@ public class Toggle {
 			state = !state;
 			time = System.nanoTime();
 		}
-		
-		previousState = pressed;		
+
+		previousState = pressed;
 		return state;
 	}
-	
+
 	public boolean toggle() {
 		state = !state;
 		return state;
 	}
-	
+
 	public boolean getState() {
 		return state;
 	}
@@ -32,7 +32,7 @@ public class Toggle {
 		this.state = state;
 		return this.state;
 	}
-	
+
 	public long getLastStateChangeTime() {
 		return time;
 	}

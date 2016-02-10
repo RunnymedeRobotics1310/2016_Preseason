@@ -27,7 +27,7 @@ public class JoystickCommand extends Command {
     	double rightSpeed;
     	
     	if (Robot.oi.getGyroReset()) {
-    		Robot.chassisSubsystem.resetGyro();
+    		Robot.chassisSubsystem.resetGyroHeading();
     	}
     	
     	if (Robot.oi.getPOVAngle() != -1) {

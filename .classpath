@@ -6,7 +6,7 @@
 			<attribute name="javadoc_location" value="file:/C:/Users/anddy/wpilib/java/current/javadoc/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="networktables" sourcepath="networktables.sources"/>
+	<classpathentry kind="var" path="NetworkTables" sourcepath="networktables.sources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

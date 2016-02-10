@@ -17,7 +17,6 @@ public class ServoSubsystem extends R_Subsystem {
 		setDefaultCommand(new ServoCommand());
 	}
 
-
 	public void moveToPosition(double position) { 
 		servo.setPosition(position); 
 	}
