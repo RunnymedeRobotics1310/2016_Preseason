@@ -2,15 +2,16 @@ package robot.oi;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import robot.Field.Defence;
-import robot.Field.Slot;
+import robot.Field.Defense;
 import robot.Field.Goal;
-import robot.Field.Distance;
+import robot.Field.Lane;
+import robot.Field.Slot;
 import robot.R_GameController;
 import robot.R_GameController.Axis;
 import robot.R_GameController.Button;
 import robot.R_GameController.Stick;
 import robot.R_GameControllerFactory;
+import robot.commands.auto.AutoCommandGroup;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -62,16 +63,16 @@ public class OI {
 		return driverStick.getButton(Button.BACK);
 	}
 
-	public Defence getDefense() {
-		return Defence.toEnum(autoChooser.getSelectedDefence());
+	public Defense getDefense() {
+		return Defense.toEnum(autoChooser.getSelectedDefence());
 	}
 
 	public Slot getSlot() {
 		return Slot.toEnum(autoChooser.getSelectedSlot());
 	}
 
-	public Distance getDistance() {
-		return Distance.toEnum(autoChooser.getSelectedDistance());
+	public Lane getLane() {
+		return Lane.toEnum(autoChooser.getSelectedDistance());
 	}
 
 	public Goal getGoal() {
@@ -79,7 +80,7 @@ public class OI {
 	}
 
 	public Command getAutoCommand() {
-		return (Command) autoChooser.autoModeChooser.getSelected();
+		return new AutoCommandGroup(getSlot(), getDefense(), getLane(), getGoal());
 	}
 
 	/**

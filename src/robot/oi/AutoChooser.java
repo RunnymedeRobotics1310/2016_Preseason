@@ -11,7 +11,7 @@ import robot.commands.auto.TestAutoCommandGroup;
 public class AutoChooser {
 
 	SendableChooser autoModeChooser = new SendableChooser();
-	SendableChooser slotChooser = new SendableChooser();
+	SendableChooser laneChooser = new SendableChooser();
 	SendableChooser defenceChooser = new SendableChooser();
 	SendableChooser distanceChooser = new SendableChooser();
 	SendableChooser goalChooser = new SendableChooser();
@@ -23,11 +23,11 @@ public class AutoChooser {
 		autoModeChooser.addObject("Drive To Proximity", new DriveToProximity(0.5, 0.0));
 		autoModeChooser.addObject("Test Auto", new TestAutoCommandGroup());
 
-		slotChooser.addObject("1", new Integer(1));
-		slotChooser.addObject("2", new Integer(2));
-		slotChooser.addObject("3", new Integer(3));
-		slotChooser.addObject("4", new Integer(4));
-		slotChooser.addObject("5", new Integer(5));
+		laneChooser.addObject("1", new Integer(1));
+		laneChooser.addObject("2", new Integer(2));
+		laneChooser.addObject("3", new Integer(3));
+		laneChooser.addObject("4", new Integer(4));
+		laneChooser.addObject("5", new Integer(5));
 
 		defenceChooser.addObject("Low Bar", new String("Low Bar"));
 		defenceChooser.addObject("Ramparts", new String("Ramparts"));
@@ -45,7 +45,7 @@ public class AutoChooser {
 		goalChooser.addObject("Right", new String("Right"));
 
 		SmartDashboard.putData("Auto mode", autoModeChooser);
-		SmartDashboard.putData("Slot position", slotChooser);
+		SmartDashboard.putData("Slot position", laneChooser);
 		SmartDashboard.putData("Defences", defenceChooser);
 		SmartDashboard.putData("Distance", distanceChooser);
 		SmartDashboard.putData("Goal", goalChooser);
@@ -61,10 +61,10 @@ public class AutoChooser {
 
 	/**
 	 * 
-	 * @return The selected slot, as an integer
+	 * @return The selected lane, as an integer
 	 */
 	public int getSelectedSlot() {
-		return (int) slotChooser.getSelected();
+		return (int) laneChooser.getSelected();
 	}
 
 	/**

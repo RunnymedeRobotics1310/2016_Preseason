@@ -24,39 +24,43 @@ public class Field {
 		}
 	}
 	
-	public enum Distance {
+	public enum Lane {
 		CLOSE ("Close"),
 		FAR ("Far");
 		
 		private final String stringValue;
 		
-		Distance(String stringValue) {
+		Lane(String stringValue) {
 			this.stringValue = stringValue;
 		}
 		
-		public static Distance toEnum(String stringValue) {
-			for(Distance distance: Distance.values()) {
-				if(distance.stringValue.equals(stringValue)) {
-					return distance;
+		public static Lane toEnum(String stringValue) {
+			for(Lane lane: Lane.values()) {
+				if(lane.stringValue.equals(stringValue)) {
+					return lane;
 				}
 			}
-			System.out.println("Distance value (" + stringValue + ") is not a valid goal string");
+			System.out.println("Lane value (" + stringValue + ") is not a valid lane string");
 			return null;
 		}
 	}
 	
 	public enum Slot { 
 		
-		ONE   (1), 
-		TWO   (2), 
-		THREE (3), 
-		FOUR  (4), 
-		FIVE  (5); 
+		//FIXME: APPROX VALUES USED, CHANGE BADLY.
+		ONE   (1, 10), 
+		TWO   (2, 60), 
+		THREE (3, 110), 
+		FOUR  (4, 160), 
+		FIVE  (5, 180); 
 	
 		private final int intValue;
 		
-		Slot (int intValue) {
+		private final double distanceToLeftWall;
+		
+		Slot (int intValue, double distanceToLeftWall) {
 			this.intValue = intValue;
+			this.distanceToLeftWall = distanceToLeftWall;
 		}
 		
 		public static Slot toEnum(int intValue) {
@@ -68,9 +72,14 @@ public class Field {
 			System.out.println("Slot value (" + intValue + ") is not a valid slot");
 			return null;
 		}
-	};
+
+		public double getDistanceToLeftWall() {
+			return distanceToLeftWall;
+		}
+		
+	}
 	
-	public enum Defence {
+	public enum Defense {
 
 		LOW_BAR         ("Low Bar"),
 		RAMPARTS        ("Ramparts"),
@@ -82,17 +91,17 @@ public class Field {
 	
 		private final String stringValue;
 		
-		Defence (String stringValue) {
+		Defense (String stringValue) {
 			this.stringValue = stringValue;
 		}
 		
-		public static Defence toEnum(String stringValue) {
-			for (Defence defence: Defence.values()) {
-				if (defence.stringValue.equals(stringValue))  {
-					return defence;
+		public static Defense toEnum(String stringValue) {
+			for (Defense defense: Defense.values()) {
+				if (defense.stringValue.equals(stringValue))  {
+					return defense;
 				}
 			}
-			System.out.println("Defence value (" + stringValue + ") is not a valid defence string");
+			System.out.println("Defense value (" + stringValue + ") is not a valid defense string");
 			return null;
 		}
 
