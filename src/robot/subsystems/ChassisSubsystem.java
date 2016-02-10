@@ -19,9 +19,9 @@ public class ChassisSubsystem extends R_Subsystem {
 
 	Talon leftMotor = new R_Talon(RobotMap.MotorMap.LEFT_MOTOR);
 	Talon rightMotor = new R_Talon(RobotMap.MotorMap.RIGHT_MOTOR);
-	DigitalInput leftProximitySensor = new DigitalInput(RobotMap.SensorMap.LEFT_LIMIT_SWITCH.port);
-	DigitalInput centerProximitySensor = new DigitalInput(RobotMap.SensorMap.CENTER_LIMIT_SWITCH.port);
-	DigitalInput rightProximitySensor = new DigitalInput(RobotMap.SensorMap.RIGHT_LIMIT_SWITCH.port);
+	DigitalInput leftProximitySensor = new DigitalInput(RobotMap.SensorMap.LEFT_PROXIMITY_SENSOR.port);
+	DigitalInput centerProximitySensor = new DigitalInput(RobotMap.SensorMap.CENTER_PROXIMITY_SENSOR.port);
+	DigitalInput rightProximitySensor = new DigitalInput(RobotMap.SensorMap.RIGHT_PROXIMITY_SENSOR.port);
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
 	R_Ultrasonic ultrasonicSensor = new R_Ultrasonic(RobotMap.SensorMap.ULTRASONIC.port);
@@ -90,7 +90,7 @@ public class ChassisSubsystem extends R_Subsystem {
 
 	public boolean getProximity() {
 		boolean proximity = !leftProximitySensor.get() || !centerProximitySensor.get() || !rightProximitySensor.get();
-		SmartDashboard.putBoolean("Front Limit", proximity);
+		SmartDashboard.putBoolean("Proximity Sensor(s) active", proximity);
 		return proximity;
 	}
 

@@ -39,9 +39,9 @@ public class RobotMap {
     	
     	// Digital Ports
     	SHOOTER_LIMIT_SWITCH(6),
-    	LEFT_LIMIT_SWITCH(7),
-    	CENTER_LIMIT_SWITCH(8),
-    	RIGHT_LIMIT_SWITCH(9);
+    	LEFT_PROXIMITY_SENSOR(7),
+    	CENTER_PROXIMITY_SENSOR(8),
+    	RIGHT_PROXIMITY_SENSOR(9);
     	
         public final int port;
 
@@ -69,6 +69,5 @@ public class RobotMap {
     		this.maxRate = maxRate;
     		this.countsPerInch = countsPerInch;
     	}
-    }
-    
+    }    
 }
