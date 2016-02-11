@@ -9,17 +9,17 @@ import robot.Robot;
  */
 public class GoStraightCommand extends Command {
 
-	double angleSetpoint;
+	//No encoder setpoint, since we'll reset the encoder counts every time we want to go straight
 
-	public GoStraightCommand(double angle) {
+	public GoStraightCommand() {
 		requires(Robot.chassisSubsystem);
-		this.angleSetpoint = angle;
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		GoStraightPID.setEnabled(false);
-		GoStraightPID.setSetpoint(angleSetpoint);
+		//This resets the encoders :)
+		GoStraightPID.setSetpoint();
 		GoStraightPID.setEnabled(true);
 	}
 
@@ -30,9 +30,8 @@ public class GoStraightCommand extends Command {
 		double leftSpeed;
 		double rightSpeed;
 
-		SmartDashboard.putNumber("Angle setpoint", angleSetpoint);
-		SmartDashboard.putNumber("Angle difference", -Robot.chassisSubsystem.getAngleDifference(angleSetpoint));
-		SmartDashboard.putNumber("AnglePIDOutput", GoStraightPID.getOutput());
+		SmartDashboard.putNumber("Encoder difference", -Robot.chassisSubsystem.getEncoderDifference());
+		SmartDashboard.putNumber("EncoderPIDOutput", GoStraightPID.getOutput());
 
 		double turn = GoStraightPID.getOutput();
 
