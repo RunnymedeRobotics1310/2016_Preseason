@@ -26,21 +26,16 @@ public class JoystickCommand extends Command {
     	double leftSpeed;
     	double rightSpeed;
     	
-    	if (Robot.oi.getGyroReset()) {
-    		Robot.chassisSubsystem.resetGyro();
-    	}
-    	
-    	if (Robot.oi.getPOVAngle() != -1) {
-    		Scheduler.getInstance().add(new RotateToAngle(Robot.oi.getPOVAngle(), 3.0));
-    		return;
-    	}
     	/*
-    	// If the user is not turning, then follow the gyro using the GoStraight command.
+    	// If the user is not turning, then follow the encoders using the GoStraight command.
     	if (Math.abs(turn) < 0.03) {
     		Scheduler.getInstance().add(new GoStraightCommand(Robot.chassisSubsystem.getCurrentAngle()));
     		return;
     	}
     	*/
+    	
+    	//NOTE: at the moment, the gostraightcommand isn't used!
+    	
     	if (Math.abs(speed) < 0.03) {
     		leftSpeed = turn;
     		rightSpeed = -turn;

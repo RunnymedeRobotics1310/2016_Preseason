@@ -7,12 +7,10 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import robot.R_Gyro;
 import robot.R_PIDController;
 import robot.R_PIDInput;
 import robot.R_Subsystem;
 import robot.R_Talon;
-import robot.R_Ultrasonic;
 import robot.RobotMap;
 import robot.commands.JoystickCommand;
 
@@ -28,7 +26,6 @@ public class ChassisSubsystem extends R_Subsystem {
 	DigitalInput rightLimitSwitch = new DigitalInput(RobotMap.SensorMap.RIGHT_LIMIT_SWITCH.port);
 	Encoder leftEncoder = new Encoder(RobotMap.EncoderMap.LEFT.ch1, RobotMap.EncoderMap.LEFT.ch2);
 	Encoder rightEncoder = new Encoder(RobotMap.EncoderMap.RIGHT.ch1, RobotMap.EncoderMap.RIGHT.ch2);
-	R_Ultrasonic ultrasonic = new R_Ultrasonic(RobotMap.SensorMap.ULTRASONIC.port);
 
 	/*
 	 * Motor PID Controllers
@@ -53,16 +50,9 @@ public class ChassisSubsystem extends R_Subsystem {
 
 	List<R_PIDController> pidControllers = new ArrayList<R_PIDController>();
 
-	// Gyro
-	R_Gyro gyro = new R_Gyro(RobotMap.SensorMap.GYRO.port);
-
 	public void init() {
 		pidControllers.add(leftMotorPID);
 		pidControllers.add(rightMotorPID);
-
-		gyro.initGyro();
-		gyro.setSensitivity(0.00165 * (360.0 / 365.0));
-		gyro.calibrate();
 	}
 
 	public void initDefaultCommand() {
@@ -83,33 +73,11 @@ public class ChassisSubsystem extends R_Subsystem {
 			rightMotorPID.enable();
 		}
 	}
-
-	public double getCurrentAngle() {
-		return gyro.getAngle();
+	
+	public double getEncoderDifference() {
+		return rightEncoder.getRaw() - leftEncoder.getRaw();
 	}
-
-	public double getAngleDifference(double targetAngle) {
-		return gyro.getAngleDifference(targetAngle);
-	}
-
-	public boolean getFrontLimit() {
-	    boolean frontLimit = !rightLimitSwitch.get() || !leftLimitSwitch.get() || !centerLimitSwitch.get();
-	    SmartDashboard.putBoolean("Front Limit", frontLimit);
-	    return frontLimit;
-	}
-
-	public double getUltraSonicDistance() {
-		return this.ultrasonic.getDistance();
-	}
-
-	@Override
-	public void periodic() {
-		// Update all of the PIDs every loop
-		for (R_PIDController pid : pidControllers) {
-			pid.calculate();
-		}
-	}
-
+	
 	/**
 	 * Gets the approximate distance using encoder counts by averaging the two
 	 * encoder distances.
@@ -120,20 +88,25 @@ public class ChassisSubsystem extends R_Subsystem {
 		return (this.leftEncoder.getDistance() - this.rightEncoder.getDistance()) / 2.0 / RobotMap.EncoderMap.LEFT.countsPerInch;
 	}
 
-	/**
-	 * Resets the encoders.
-	 */
 	public void resetEncoders() {
 		this.leftEncoder.reset();
 		this.rightEncoder.reset();
 	}
-	
-	public void resetUltrasonic(){
-	    ultrasonic.reset();
+
+	public boolean getFrontLimit() {
+	    boolean frontLimit = !rightLimitSwitch.get() || !leftLimitSwitch.get() || !centerLimitSwitch.get();
+	    SmartDashboard.putBoolean("Front Limit", frontLimit);
+	    return frontLimit;
 	}
-	
-	public void resetGyro() {
-		gyro.reset();
+
+
+
+	@Override
+	public void periodic() {
+		// Update all of the PIDs every loop
+		for (R_PIDController pid : pidControllers) {
+			pid.calculate();
+		}
 	}
 	
 	@Override
@@ -147,9 +120,5 @@ public class ChassisSubsystem extends R_Subsystem {
 		SmartDashboard.putData("Right Encoder", rightEncoder);
 		SmartDashboard.putData("Left Motor PID", leftMotorPID);
 		SmartDashboard.putData("Right Motor PID", rightMotorPID);
-		SmartDashboard.putData("Gyro", gyro);
-		SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
-		SmartDashboard.putNumber("Ultrasonic Sensor Distance", ultrasonic.getRawDistance());
-		SmartDashboard.putNumber("Raw ultrasonic sensor voltage", ultrasonic.getVoltage());
 	}
 }

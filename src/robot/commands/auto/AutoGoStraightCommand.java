@@ -15,13 +15,10 @@ public abstract class AutoGoStraightCommand extends Command {
 	FORWARD, BACKWARDS;
     }
 
-    private double angleSetpoint;
     private double speedSetpoint;
 
-    public AutoGoStraightCommand(double angle) {
+    public AutoGoStraightCommand() {
 	requires(Robot.chassisSubsystem);
-	this.angleSetpoint = angle;
-    }
  
 
     public void setSpeed(double speed, Direction direction) {
@@ -32,7 +29,7 @@ public abstract class AutoGoStraightCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
 	GoStraightPID.setEnabled(false);
-	GoStraightPID.setSetpoint(angleSetpoint);
+	GoStraightPID.setSetpoint();
 	GoStraightPID.setEnabled(true);
 	System.out.println("Initialize AutoGoStraight");
     }
@@ -44,9 +41,8 @@ public abstract class AutoGoStraightCommand extends Command {
 	double leftSpeed;
 	double rightSpeed;
 
-	SmartDashboard.putNumber("Angle setpoint", angleSetpoint);
-	SmartDashboard.putNumber("Angle difference", -Robot.chassisSubsystem.getAngleDifference(angleSetpoint));
-	SmartDashboard.putNumber("AnglePIDOutput", GoStraightPID.getOutput());
+	SmartDashboard.putNumber("Encoder difference", -Robot.chassisSubsystem.getEncoderDifference());
+	SmartDashboard.putNumber("EncoderPIDOutput", GoStraightPID.getOutput());
 
 	double turn = GoStraightPID.getOutput();
 
@@ -89,4 +85,5 @@ public abstract class AutoGoStraightCommand extends Command {
     protected void interrupted() {
     }
 
+}
 }

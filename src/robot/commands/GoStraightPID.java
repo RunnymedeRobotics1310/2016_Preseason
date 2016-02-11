@@ -9,56 +9,55 @@ import robot.Robot;
 public class GoStraightPID {
 
 	/*
-	 * Angle PID Controller
+	 * ENCODER PID Controller
 	 * 
-	 * The angle PID controller is declared as static so that they can be adjusted in the SmartDashboard
+	 * The encoder PID controller is declared as static so that they can be adjusted in the SmartDashboard
 	 */
-	private static R_PIDInput anglePIDInput = new R_PIDInput() {
+	private static R_PIDInput encoderPIDInput = new R_PIDInput() {
 		@Override
 		public double pidGet() {
-			return -Robot.chassisSubsystem.getAngleDifference(angleSetpoint) / 180.0;
+			return -Robot.chassisSubsystem.getEncoderDifference();
 		}
 	};
 
-	private static PIDOutput anglePIDOutput = new PIDOutput() {
+	private static PIDOutput encoderPIDOutput = new PIDOutput() {
 		@Override
 		public void pidWrite(double output) {
 			pidOutputValue = output;
 		}
 	};
-	
-	private static double angleSetpoint = 0.0;
+
 	private static double pidOutputValue = 0.0;
 
-	private static R_PIDController anglePIDController = 
-			new R_PIDController(20.0, 2.0, 0.0, 1.0, anglePIDInput, anglePIDOutput);
+	private static R_PIDController encoderPIDController = 
+			new R_PIDController(1.0, 0.0, 0.0, 1.0, encoderPIDInput, encoderPIDOutput);
 	
 	public static void setEnabled(boolean enabled) {
 		if (enabled) {
-			anglePIDController.enable();
+			encoderPIDController.enable();
 		} else {
-			anglePIDController.reset();
+			encoderPIDController.reset();
 		}
 	}
 	
 	public static boolean isEnabled() {
-		return anglePIDController.isEnabled();
+		return encoderPIDController.isEnabled();
 	}
 	
 	public static double getOutput() { 
 		return pidOutputValue;
 	}
 	
-	public static void setSetpoint(double setpoint) {
-		angleSetpoint = setpoint;
+	public static void setSetpoint() {
+		Robot.chassisSubsystem.resetEncoders();
 	}
 
 	public static void periodic() {
-		anglePIDController.calculate();
+		encoderPIDController.calculate();
 	}
 	
 	public static void updateDashboard() {
-		SmartDashboard.putData("AnglePID", anglePIDController);
+		SmartDashboard.putData("EncoderPID", encoderPIDController);
 	}
 
 }
